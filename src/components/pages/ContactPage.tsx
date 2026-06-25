@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
 
 /* ------------------------------------------------------------------ */
 /*  AnimatedSection — subtle fade-up on scroll                        */
@@ -133,19 +132,21 @@ export default function ContactPage({
 
   return (
     <div className="min-h-screen">
-      {/* ----- 1. Background Image + Header ----- */}
+      {/* ----- 1. Background Video + Header ----- */}
       <section className="relative overflow-hidden">
-        {/* Background image at very low opacity */}
-        <Image
-          src="/img/contact-bg.jpg"
-          alt=""
-          fill
-          unoptimized
-          className="object-cover opacity-[0.07]"
+        {/* Background video */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="hero-video"
           aria-hidden="true"
-        />
-        {/* Gradient overlay to fade image into dark background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050a12]/50 to-[#050a12]" />
+        >
+          <source src="/video/contact-bg.mp4" type="video/mp4" />
+        </video>
+        {/* Gradient overlay to blend video into dark background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050a12]/40 via-[#050a12]/70 to-[#050a12]" />
 
         {/* Header content */}
         <div className="relative z-10 pt-32 pb-12">
