@@ -2,9 +2,6 @@
 
 import { useRef, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Accordion,
   AccordionContent,
@@ -13,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 
 /* ------------------------------------------------------------------ */
-/*  AnimatedSection helper                                             */
+/*  AnimatedSection — simple fade-up on scroll                        */
 /* ------------------------------------------------------------------ */
 function AnimatedSection({
   children,
@@ -25,13 +22,13 @@ function AnimatedSection({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
       className={className}
     >
@@ -90,78 +87,66 @@ export default function FAQPage({
   navigate: (page: string) => void;
 }) {
   return (
-    <div className="min-h-screen grid-bg noise-overlay relative">
-      {/* ----- 1. Page Header ----- */}
-      <section className="pt-32 pb-12 px-4 text-center relative z-10 max-w-3xl mx-auto">
+    <div className="min-h-screen">
+      {/* ----- 1. Header ----- */}
+      <section className="pt-32 pb-16 px-4 text-center">
         <AnimatedSection>
-          <Badge
-            variant="outline"
-            className="border-emerald-500/30 text-emerald-400 mb-6"
-          >
+          <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 mb-6">
             FAQ
-          </Badge>
+          </p>
         </AnimatedSection>
 
         <AnimatedSection delay={0.1}>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-            Got <span className="gradient-text">Questions?</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            Frequently Asked Questions
           </h1>
         </AnimatedSection>
 
         <AnimatedSection delay={0.2}>
-          <p className="mt-5 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Everything you need to know about TechPartner.
+          <p className="mt-5 text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            Everything you need to know about TechPartner. Can&apos;t find what
+            you&apos;re looking for? Reach out directly.
           </p>
         </AnimatedSection>
       </section>
 
       {/* ----- 2. FAQ Accordion ----- */}
-      <section className="px-4 max-w-3xl mx-auto relative z-10 pb-4">
-        <AnimatedSection delay={0.15}>
-          <Accordion type="single" collapsible className="space-y-3">
+      <section className="px-4 max-w-3xl mx-auto">
+        <AnimatedSection delay={0.1}>
+          <Accordion type="single" collapsible>
             {faqItems.map((item, index) => (
-              <AnimatedSection key={index} delay={index * 0.06}>
-                <AccordionItem
-                  value={`faq-${index}`}
-                  className="glass-card rounded-xl border-0 overflow-hidden data-[state=open]:glow-emerald"
-                >
-                  <AccordionTrigger className="px-6 py-5 text-left text-foreground hover:text-emerald-400 transition-colors [&[data-state=open]>svg]:text-emerald-400">
-                    {item.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-5 text-muted-foreground leading-relaxed">
-                    {item.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              </AnimatedSection>
+              <AccordionItem
+                key={index}
+                value={`faq-${index}`}
+                className="border-b border-white/[0.06]"
+              >
+                <AccordionTrigger className="px-0 py-5 text-left text-white font-medium hover:no-underline hover:text-white [&[data-state=open]>svg]:text-emerald-400">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm text-slate-400 leading-relaxed">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
             ))}
           </Accordion>
         </AnimatedSection>
       </section>
 
-      {/* ----- 3. Still Have Questions CTA ----- */}
-      <section className="mt-12 pb-20 px-4 max-w-3xl mx-auto text-center relative z-10">
+      {/* ----- 3. CTA ----- */}
+      <section className="py-16 px-4 text-center">
         <AnimatedSection>
-          <div className="glass-card animated-border rounded-2xl p-8">
-            <div className="flex justify-center mb-4">
-              <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-                <MessageSquare className="h-6 w-6 text-emerald-400" />
-              </div>
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-bold mb-3">
-              Still have questions?
-            </h3>
-            <p className="text-muted-foreground max-w-md mx-auto leading-relaxed mb-6">
-              Let&apos;s talk through it. No commitment, no pressure.
-            </p>
-            <Button
-              onClick={() => navigate("contact")}
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold gap-2"
-              size="lg"
-            >
-              Contact Us
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </div>
+          <h3 className="text-2xl font-medium text-white mb-2">
+            Still have questions?
+          </h3>
+          <p className="text-sm text-slate-400 mb-6">
+            We&apos;re happy to help. No commitment, no pressure.
+          </p>
+          <button
+            onClick={() => navigate("contact")}
+            className="border border-white/20 text-white rounded-lg hover:bg-white/5 px-8 py-2.5 text-sm font-medium transition-colors"
+          >
+            Contact Us
+          </button>
         </AnimatedSection>
       </section>
     </div>

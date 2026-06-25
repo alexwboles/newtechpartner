@@ -2,14 +2,12 @@
 
 import { useState, useRef, type ReactNode, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Mail, Clock, Zap, Check, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Mail, Clock, Zap, Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 /* ------------------------------------------------------------------ */
-/*  AnimatedSection helper                                             */
+/*  AnimatedSection — simple fade-up on scroll                        */
 /* ------------------------------------------------------------------ */
 function AnimatedSection({
   children,
@@ -21,13 +19,13 @@ function AnimatedSection({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
       className={className}
     >
@@ -42,19 +40,23 @@ function AnimatedSection({
 const benefits = [
   {
     icon: Mail,
-    text: "Direct access — no ticket queues",
+    title: "Direct Access",
+    description: "No ticket queues. Real person, real answers.",
   },
   {
     icon: Clock,
-    text: "Response within 48 hours",
+    title: "Fast Response",
+    description: "Priority support within 48 hours.",
   },
   {
     icon: Zap,
-    text: "First project delivered in days",
+    title: "Rapid Delivery",
+    description: "First projects delivered in days.",
   },
   {
     icon: Check,
-    text: "No contracts, cancel anytime",
+    title: "No Commitment",
+    description: "Cancel anytime. No contracts.",
   },
 ];
 
@@ -90,65 +92,69 @@ export default function ContactPage({
   };
 
   return (
-    <div className="min-h-screen grid-bg noise-overlay relative">
-      {/* ----- 1. Page Header ----- */}
-      <section className="pt-32 pb-8 px-4 text-center relative z-10">
+    <div className="min-h-screen">
+      {/* ----- 1. Header ----- */}
+      <section className="pt-32 pb-8 px-4 text-center">
         <AnimatedSection>
-          <Badge
-            variant="outline"
-            className="border-emerald-500/30 text-emerald-400 mb-6"
-          >
-            Let&apos;s Talk
-          </Badge>
+          <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 mb-6">
+            Contact
+          </p>
         </AnimatedSection>
 
         <AnimatedSection delay={0.1}>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-            Ready to{" "}
-            <span className="gradient-text">Transform</span>{" "}
-            Your Business?
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            Let&apos;s Talk
           </h1>
         </AnimatedSection>
 
         <AnimatedSection delay={0.2}>
-          <p className="mt-5 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Get a personalized tech strategy in just 2 minutes. No commitment,
-            no pressure — just a conversation about how TechPartner can help you
-            grow.
+          <p className="mt-5 text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            Get a personalized tech strategy. No commitment, no pressure — just
+            a conversation about how we can help.
           </p>
         </AnimatedSection>
       </section>
 
-      {/* ----- 2. Contact Section ----- */}
-      <section className="px-4 max-w-4xl mx-auto relative z-10 pb-4">
-        <div className="grid lg:grid-cols-5 gap-8">
-          {/* --- Left Column: Benefits --- */}
+      {/* ----- 2. Two Columns ----- */}
+      <section className="px-4 max-w-5xl mx-auto mt-12 pb-24">
+        <div className="grid lg:grid-cols-5 gap-12 items-start">
+          {/* Left column: Why TechPartner */}
           <div className="hidden lg:block lg:col-span-2">
             <AnimatedSection delay={0.1}>
-              <div className="glass-card rounded-2xl p-8 h-full">
-                <h3 className="text-xl font-bold mb-6">
-                  Why businesses love TechPartner
-                </h3>
-                <div className="flex flex-col gap-5">
-                  {benefits.map((benefit, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0 mt-0.5">
-                        <benefit.icon className="h-5 w-5 text-emerald-400" />
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 mb-8">
+                Why TechPartner
+              </p>
+
+              <div className="flex flex-col">
+                {benefits.map((benefit) => {
+                  const Icon = benefit.icon;
+                  return (
+                    <div
+                      key={benefit.title}
+                      className="py-4 border-b border-white/[0.06] first:pt-0 last:border-0"
+                    >
+                      <div className="flex items-start gap-3">
+                        <Icon className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-medium text-white">
+                            {benefit.title}
+                          </p>
+                          <p className="text-sm text-slate-400 mt-0.5">
+                            {benefit.description}
+                          </p>
+                        </div>
                       </div>
-                      <span className="text-foreground/90 text-sm leading-relaxed pt-2">
-                        {benefit.text}
-                      </span>
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
             </AnimatedSection>
           </div>
 
-          {/* --- Right Column: Form --- */}
+          {/* Right column: Form */}
           <div className="lg:col-span-3">
             <AnimatedSection delay={0.2}>
-              <div className="glass-card animated-border rounded-2xl p-8">
+              <div className="pro-card p-8 sm:p-10">
                 <AnimatePresence mode="wait">
                   {submitted ? (
                     <motion.div
@@ -157,15 +163,16 @@ export default function ContactPage({
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.4 }}
-                      className="flex flex-col items-center justify-center py-12 text-center"
+                      className="flex flex-col items-center justify-center py-16 text-center"
                     >
-                      <div className="h-16 w-16 rounded-full bg-emerald-500/10 flex items-center justify-center mb-5">
-                        <Check className="h-8 w-8 text-emerald-400" />
+                      <div className="h-12 w-12 rounded-full bg-emerald-500/10 flex items-center justify-center mb-4">
+                        <Check className="h-6 w-6 text-emerald-400" />
                       </div>
-                      <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-                      <p className="text-muted-foreground max-w-sm leading-relaxed">
-                        We&apos;ll get back to you within 48 hours with a
-                        personalized tech strategy for your business.
+                      <h3 className="text-lg font-medium text-white">
+                        Message received
+                      </h3>
+                      <p className="text-sm text-slate-400 mt-2">
+                        We&apos;ll get back to you within 48 hours.
                       </p>
                     </motion.div>
                   ) : (
@@ -177,12 +184,12 @@ export default function ContactPage({
                       onSubmit={handleSubmit}
                       className="space-y-5"
                     >
-                      {/* Name + Business row */}
+                      {/* Name + Business */}
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
+                        <div className="space-y-1.5">
                           <label
                             htmlFor="contact-name"
-                            className="text-sm font-medium text-foreground/80"
+                            className="text-sm font-medium text-white/80"
                           >
                             Name <span className="text-emerald-400">*</span>
                           </label>
@@ -197,18 +204,15 @@ export default function ContactPage({
                                 name: e.target.value,
                               }))
                             }
-                            className="bg-white/[0.03] border-white/10 focus:border-emerald-500/50 placeholder:text-muted-foreground/50"
+                            className="bg-[#080e1a] border-white/[0.06] rounded-lg text-white placeholder:text-slate-600 focus:border-emerald-500/50"
                           />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-1.5">
                           <label
                             htmlFor="contact-business"
-                            className="text-sm font-medium text-foreground/80"
+                            className="text-sm font-medium text-white/80"
                           >
-                            Business{" "}
-                            <span className="text-muted-foreground/50">
-                              (optional)
-                            </span>
+                            Business
                           </label>
                           <Input
                             id="contact-business"
@@ -220,16 +224,16 @@ export default function ContactPage({
                                 business: e.target.value,
                               }))
                             }
-                            className="bg-white/[0.03] border-white/10 focus:border-emerald-500/50 placeholder:text-muted-foreground/50"
+                            className="bg-[#080e1a] border-white/[0.06] rounded-lg text-white placeholder:text-slate-600 focus:border-emerald-500/50"
                           />
                         </div>
                       </div>
 
                       {/* Email */}
-                      <div className="space-y-2">
+                      <div className="space-y-1.5">
                         <label
                           htmlFor="contact-email"
-                          className="text-sm font-medium text-foreground/80"
+                          className="text-sm font-medium text-white/80"
                         >
                           Email <span className="text-emerald-400">*</span>
                         </label>
@@ -245,15 +249,15 @@ export default function ContactPage({
                               email: e.target.value,
                             }))
                           }
-                          className="bg-white/[0.03] border-white/10 focus:border-emerald-500/50 placeholder:text-muted-foreground/50"
+                          className="bg-[#080e1a] border-white/[0.06] rounded-lg text-white placeholder:text-slate-600 focus:border-emerald-500/50"
                         />
                       </div>
 
                       {/* Message */}
-                      <div className="space-y-2">
+                      <div className="space-y-1.5">
                         <label
                           htmlFor="contact-message"
-                          className="text-sm font-medium text-foreground/80"
+                          className="text-sm font-medium text-white/80"
                         >
                           What do you need help with?
                         </label>
@@ -268,20 +272,19 @@ export default function ContactPage({
                               message: e.target.value,
                             }))
                           }
-                          className="bg-white/[0.03] border-white/10 focus:border-emerald-500/50 placeholder:text-muted-foreground/50 resize-none"
+                          className="bg-[#080e1a] border-white/[0.06] rounded-lg text-white placeholder:text-slate-600 focus:border-emerald-500/50 resize-none"
                         />
                       </div>
 
                       {/* Submit */}
-                      <Button
+                      <button
                         type="submit"
-                        className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold gap-2 h-12 text-base"
+                        className="w-full bg-white text-[#050a12] font-semibold rounded-lg hover:bg-slate-100 py-3 text-sm transition-colors"
                       >
-                        Get Your Custom Plan
-                        <ArrowRight className="h-4 w-4" />
-                      </Button>
+                        Send Message
+                      </button>
 
-                      <p className="text-center text-xs text-muted-foreground/70 pt-1">
+                      <p className="text-center text-xs text-slate-600 mt-4">
                         Free consultation. No commitment. Response within 48
                         hours.
                       </p>
@@ -292,16 +295,6 @@ export default function ContactPage({
             </AnimatedSection>
           </div>
         </div>
-      </section>
-
-      {/* ----- 3. Bottom Note ----- */}
-      <section className="mt-12 pb-20 px-4 text-center relative z-10">
-        <AnimatedSection>
-          <p className="text-sm text-slate-500">
-            Prefer to talk? Reach out directly and I&apos;ll get back to you
-            within 48 hours.
-          </p>
-        </AnimatedSection>
       </section>
     </div>
   );

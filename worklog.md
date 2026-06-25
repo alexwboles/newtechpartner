@@ -157,3 +157,110 @@ Work Log:
 Stage Summary:
 - `/home/z/my-project/src/app/page.tsx` — Multi-page SPA router with lazy-loaded pages, hash-based navigation, page transitions, active nav states, mobile-responsive hamburger menu, and persistent footer
 - All 6 pages route correctly: Home, Services, Pricing, How It Works, FAQ, Contact
+
+---
+Task ID: 8
+Agent: Main Agent
+Task: Complete professional redesign — remove vibe-coded styling, add images/video, match Vilano South aesthetic
+
+Work Log:
+- Analyzed vilanosouth.base44.app for design reference: video hero, image-rich sections, clean typography, minimal animations
+- Generated 9 AI images: hero-office, hands-typing, team-collab, ai-chatbot, website-design, tech-abstract, person-1/2/3 headshots
+- Completely rewrote globals.css: removed particles, grid-bg, noise-overlay, glassmorphism, glow effects, shimmer animations. Added pro-card, section-divider, hero-overlay, kenburns, subtle-grid, clean scrollbar
+- Rewrote all 6 page components with professional design:
+  - HomePage: Ken Burns hero with hero-office.jpg, image+text sections, real testimonial headshots, tech-abstract CTA bg
+  - ServicesPage: 3 featured service rows with alternating image layout, 8-card grid, real images
+  - PricingPage: Clean comparison cards, stats row, guarantee section
+  - HowItWorksPage: Vertical step layout with connector lines, hands-typing.jpg section
+  - FAQPage: Clean accordion with border-b separators
+  - ContactPage: Two-column with benefits sidebar, clean form
+- Rewrote page.tsx router: refined Navbar (smaller, subtler, no gradient buttons), cleaner Footer, minimal page transitions (fade only)
+- Updated layout.tsx: bg-[#050a12] base
+- ESLint: zero errors
+- Verified: 48KB HTML, 2,392 chars visible text, all content present, server compiles clean
+
+Stage Summary:
+- 9 AI-generated images in /public/img/
+- Complete professional redesign removing all "vibe coded" elements
+- Clean, image-rich, minimal design inspired by Vilano South
+- Ken Burns hero effect, real headshot testimonials, alternating image+text layouts
+
+---
+Task ID: 8
+Agent: Main Agent
+Task: Rewrite HomePage.tsx — clean, professional, image-rich premium redesign
+
+Work Log:
+- Read globals.css to understand available CSS classes (hero-overlay, hero-overlay-side, pro-card, kenburns, section-divider, gradient-text, etc.)
+- Read existing HomePage.tsx and worklog.md for context
+- Completely rewrote `/home/z/my-project/src/components/pages/HomePage.tsx` — removed all flashy effects (FloatingParticles, CountUp, grid-bg, noise-overlay, glow-emerald, animated-border, parallax useScroll/useTransform, scroll indicator)
+- Removed unused imports (useState, useEffect, AnimatePresence, useScroll, useTransform, Sparkles, ChevronDown, Star, Bot, Zap, Clock, Quote, MousePointerClick, Cpu, Layers, LineChart)
+- Added `Image` from `next/image` for all images with `unoptimized` prop
+- Simplified `AnimatedSection` helper to clean fade-up only (opacity:0→1, y:20→0, duration 0.6, margin -60px)
+- Built 6 clean sections:
+  1. **Hero** (full viewport): Ken Burns `/img/hero-office.jpg` background with hero-overlay + hero-overlay-side, "BUSINESS TECHNOLOGY PARTNER" uppercase label, clean white H1 "Technology That Powers Your Business Forward", slate-400 subtitle, white "Get Started" + outlined "View Services" buttons, "Starting at $200/month" text
+  2. **Logo Strip** (py-16): Section divider, "Trusted by businesses across every industry" label, 6 industry names in flex-wrap row (Healthcare, Real Estate, E-Commerce, Professional Services, Restaurants, Fitness)
+  3. **Value Proposition** (py-24): H2 "Everything Your Business Needs", subtitle, 2-column layout with `/img/team-collab.jpg` (aspect-4/3, rounded-2xl) on left, two feature blocks ("AI-First Approach" / "Built for Speed") with emerald labels and border-t divider on right
+  4. **Image + Text** (py-24, bg-[#080e1a]): Left column with "THE RESULT" label, H2 "A Complete Tech Department for $200/Month", description paragraph, 4 check items with Check icons, "See All Services" outlined button. Right column with `/img/ai-chatbot.jpg` (aspect-square, rounded-2xl)
+  5. **Testimonials** (py-24): Section divider, H2 "What Our Clients Say", 3 pro-card cards with serif quote mark, quote text, border-t author section with real person headshots (/img/person-{1,2,3}.jpg), name, role, and metric Badge
+  6. **CTA** (py-32): `/img/tech-abstract.jpg` at opacity-20 with gradient overlay, H2 "Ready to Transform Your Business?", subtitle, white "Get Started Today" button
+- All images use `className="object-cover w-full h-full"` per spec
+- ESLint passes clean with zero errors
+- Dev server compiles successfully (200 responses)
+
+Stage Summary:
+- Completely rewrote `/home/z/my-project/src/components/pages/HomePage.tsx` — Professional, minimal, image-rich redesign with 6 sections, Ken Burns hero, real person headshots, clean fade-up animations, no flashy effects. Premium agency-site aesthetic matching Vilano South style.
+
+---
+Task ID: 9
+Agent: Main Agent
+Task: Rewrite ServicesPage.tsx — clean, professional, image-rich premium redesign
+
+Work Log:
+- Read globals.css to understand available CSS classes (pro-card, img-cover, section-divider, gradient-text, subtle-grid, etc.)
+- Read existing ServicesPage.tsx (expandable accordion cards with glassmorphism, color-coded icons, AnimatePresence) and worklog.md for context
+- Completely rewrote `/home/z/my-project/src/components/pages/ServicesPage.tsx` — removed all flashy effects (glass-card, glow-emerald, animated-border, color-coded gradients, AnimatePresence expand/collapse, ChevronDown, Badge, useState, grid-bg, noise-overlay)
+- Simplified `AnimatedSection` helper to clean fade-up only (opacity:0→1, y:20→0, duration 0.6, margin -60px)
+- Built 4 clean sections:
+  1. **Page Header** (pt-32 pb-16, max-w-6xl): "OUR SERVICES" uppercase emerald-400 label with 0.3em tracking, H1 "30+ Services. One Flat Rate." in white, slate-400 subtitle in max-w-xl
+  2. **Featured Services** (py-16, max-w-6xl): 3 large image+text cards using lg:grid-cols-2 gap-0 with alternating layout. Card A (AI Tools, image LEFT, bg-[#080e1a] text RIGHT), Card B (Website & App, text LEFT bg-[#0a0f1a], image RIGHT), Card C (Support & Security, image LEFT, bg-[#080e1a] text RIGHT). Each card: large faded number (01/02/03) in white/5, bold title, description, 3 check items with emerald Check icons. All images use next/image with unoptimized prop, aspect-[4/3], object-cover.
+  3. **All Services Grid** (py-16, max-w-6xl): Section divider, H2 "The Complete Service List", 2-column md:grid-cols-2 gap-4 grid with 8 pro-card cards (p-6). Each card has emerald-500/10 icon container (w-8 h-8 rounded-lg), white title, and 3-6 bullet items with "•" prefix in text-xs text-slate-400. Categories: AI Tools (Bot), Custom Apps (Code2), Financial Tools (CreditCard), Website Setup (Globe), Security (ShieldCheck), Tech Support (Headphones), Marketing (Megaphone), Workflow (Workflow).
+  4. **Bottom CTA** (py-20, text-center): "Not sure what you need?" heading, "Let's figure it out together." subtitle, "Get in Touch" white button with dark text → navigate("contact")
+- No glow effects, no glassmorphism, no animated borders, no gradient shimmer anywhere
+- ESLint passes clean with zero errors
+- Dev server compiles successfully (200 responses)
+
+Stage Summary:
+- Completely rewrote `/home/z/my-project/src/components/pages/ServicesPage.tsx` — Professional, image-rich redesign with 3 alternating featured service cards (full-width images), 8-card service grid using pro-card, clean fade-up animations only. Premium agency-site aesthetic with no flashy effects.
+
+---
+Task ID: 10
+Agent: Main Agent
+Task: Rewrite PricingPage, HowItWorksPage, FAQPage, ContactPage — clean professional redesign
+
+Work Log:
+- Read globals.css for CSS classes (pro-card, section-divider, gradient-text, hero-overlay, img-cover, etc.)
+- Read all 4 existing files to understand current structure and content
+- Completely rewrote all 4 files removing: glassmorphism (glass-card), glow effects (glow-emerald), animated borders (animated-border), grid backgrounds (grid-bg), noise overlays (noise-overlay), particle effects, gradient shimmers
+- Standardized AnimatedSection helper across all files: useInView with once:true, margin "-60px", 0.6s fade-up (opacity 0→1, y 20→0)
+- Standardized button styles: white buttons (bg-white text-[#050a12] font-semibold rounded-lg hover:bg-slate-100), outline buttons (border border-white/20 text-white rounded-lg hover:bg-white/5)
+
+Files rewritten:
+
+1. **PricingPage.tsx**: Clean header with "PRICING" label, H1 "Simple, Transparent Pricing". Two pro-card comparison cards: left "Traditional Approach" with 4 cost rows (flex justify-between, border-b white/4), total in red-400; right "TechPartner" with RECOMMENDED badge (bg-emerald-500/10), 8 check-list items, $200/month price + white "Get Started" button. Stats row with section-divider: $10,300+ / $200 / 98% savings. Guarantee section with ShieldCheck icon, centered text.
+
+2. **HowItWorksPage.tsx**: Clean header with "PROCESS" label, H1 "How It Works". Vertical 4-step layout (lg:flex items-start gap-8): large step numbers in text-emerald-500/20 (w-16), title + description on right. Vertical connector lines (w-px h-12 bg-white/6) between steps. Mobile: inline step numbers. Image section: /img/hands-typing.jpg in rounded-2xl aspect-[16/9] with caption. CTA with white "Get Started" button.
+
+3. **FAQPage.tsx**: Clean header with "FAQ" label, H1 "Frequently Asked Questions". 7-item shadcn Accordion (max-w-3xl): border-b border-white/6 on items, px-0 py-5 triggers (text-white, hover:no-underline), pb-5 text-slate-400 content. All 7 Q&As preserved. CTA: "Still have questions?" with outline "Contact Us" button.
+
+4. **ContactPage.tsx**: Header with "CONTACT" label, H1 "Let's Talk". Two-column layout (lg:grid-cols-5, gap-12): left col-span-2 with "Why TechPartner" label + 4 benefit items (icon + title + description, border-b white/6); right col-span-3 with pro-card form. Form: Name + Business in 2-col grid, Email, Textarea "What do you need help with?", white "Send Message" button, disclaimer. Success state with Check icon + "Message received", auto-resets 4s. All inputs styled bg-[#080e1a] border-white/[0.06] rounded-lg.
+
+- ESLint passes clean with zero errors across all files
+- Cleaned up all unused imports
+
+Stage Summary:
+- Rewrote all 4 pages (PricingPage, HowItWorksPage, FAQPage, ContactPage) with clean, minimal, professional design
+- Removed all flashy effects (glassmorphism, glow, animated-border, grid-bg, noise-overlay)
+- Used pro-card, section-divider, gradient-text CSS classes consistently
+- Standardized AnimatedSection, white/outline button patterns across all files
+- Premium agency-site aesthetic matching Vilano South style

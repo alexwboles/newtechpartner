@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Cpu,
-  ChevronDown,
   Menu,
   XIcon,
   ArrowRight,
@@ -23,23 +22,18 @@ const HowItWorksPage = lazy(() => import("@/components/pages/HowItWorksPage"));
 const FAQPage = lazy(() => import("@/components/pages/FAQPage"));
 const ContactPage = lazy(() => import("@/components/pages/ContactPage"));
 
-/* ─── Page transition variants ─── */
+/* ─── Page transition ─── */
 const pageVariants = {
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
-  exit: { opacity: 0, y: -16, transition: { duration: 0.3, ease: "easeIn" } },
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
 /* ─── Page loading fallback ─── */
 function PageLoader() {
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center animate-pulse">
-          <Cpu className="w-5 h-5 text-white" />
-        </div>
-        <p className="text-sm text-slate-500 animate-pulse">Loading...</p>
-      </div>
+      <div className="w-6 h-6 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
     </div>
   );
 }
@@ -65,12 +59,11 @@ function Navbar({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handle = () => setScrolled(window.scrollY > 20);
+    const handle = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handle, { passive: true });
     return () => window.removeEventListener("scroll", handle);
   }, []);
 
-  // Wrapper that closes mobile menu then navigates
   const go = useCallback(
     (page: string) => {
       setMobileOpen(false);
@@ -80,28 +73,25 @@ function Navbar({
   );
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-[#0a0f1a]/90 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20"
+          ? "bg-[#050a12]/90 backdrop-blur-md border-b border-white/[0.04]"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-18">
           {/* Logo */}
           <button
             onClick={() => go("home")}
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-2.5"
           >
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center transition-transform group-hover:scale-110">
-              <Cpu className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <div className="w-7 h-7 rounded-md bg-emerald-500 flex items-center justify-center">
+              <Cpu className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="text-lg sm:text-xl font-bold tracking-tight">
-              Tech<span className="text-emerald-400">Partner</span>
+            <span className="text-base sm:text-lg font-semibold tracking-tight text-white">
+              TechPartner
             </span>
           </button>
 
@@ -111,10 +101,10 @@ function Navbar({
               <button
                 key={link.page}
                 onClick={() => go(link.page)}
-                className={`px-3 py-2 text-sm rounded-lg transition-all ${
+                className={`px-3.5 py-2 text-[13px] transition-colors ${
                   currentPage === link.page
-                    ? "text-emerald-400 bg-emerald-500/10 font-medium"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                    ? "text-white font-medium"
+                    : "text-slate-500 hover:text-slate-300"
                 }`}
               >
                 {link.label}
@@ -125,13 +115,10 @@ function Navbar({
           {/* Desktop CTA */}
           <div className="hidden lg:block">
             <button onClick={() => go("contact")}>
-              <Button
-                size="sm"
-                className="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-semibold shadow-lg shadow-emerald-500/20 transition-all hover:shadow-emerald-500/40"
-              >
+              <span className="inline-flex items-center gap-2 text-[13px] font-medium text-white bg-white/10 hover:bg-white/15 px-4 py-2 rounded-lg transition-colors">
                 Get Started
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </Button>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </span>
             </button>
           </div>
 
@@ -141,7 +128,7 @@ function Navbar({
             className="lg:hidden p-2 text-slate-400 hover:text-white transition-colors"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <XIcon className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileOpen ? <XIcon className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -153,69 +140,68 @@ function Navbar({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#0a0f1a]/95 backdrop-blur-xl border-b border-white/5"
+            className="lg:hidden bg-[#050a12]/98 backdrop-blur-md border-t border-white/[0.04]"
           >
-            <div className="px-4 py-4 space-y-1">
+            <div className="px-5 py-5 space-y-0.5">
               {navLinks.map((link) => (
                 <button
                   key={link.page}
                   onClick={() => go(link.page)}
                   className={`block w-full text-left px-3 py-2.5 text-sm rounded-lg transition-colors ${
                     currentPage === link.page
-                      ? "text-emerald-400 bg-emerald-500/10 font-medium"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                      ? "text-white font-medium"
+                      : "text-slate-500 hover:text-slate-300"
                   }`}
                 >
                   {link.label}
                 </button>
               ))}
-              <div className="pt-3 border-t border-white/5">
+              <div className="pt-4 mt-2 border-t border-white/[0.04]">
                 <button onClick={() => go("contact")} className="w-full">
-                  <Button className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-semibold">
+                  <span className="inline-flex items-center justify-center gap-2 w-full text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-500 px-4 py-2.5 rounded-lg transition-colors">
                     Get Started
-                    <ArrowRight className="w-4 h-4 ml-1" />
-                  </Button>
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
                 </button>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 }
 
 /* ─── FOOTER ─── */
 function Footer({ navigate }: { navigate: (page: string) => void }) {
   return (
-    <footer className="relative border-t border-white/5 bg-[#0a0f1a]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
+    <footer className="border-t border-white/[0.04] bg-[#050a12]">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <button
               onClick={() => navigate("home")}
-              className="flex items-center gap-2 mb-4"
+              className="flex items-center gap-2.5 mb-4"
             >
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center">
-                <Cpu className="w-4 h-4 text-white" />
+              <div className="w-7 h-7 rounded-md bg-emerald-500 flex items-center justify-center">
+                <Cpu className="w-3.5 h-3.5 text-white" />
               </div>
-              <span className="text-lg font-bold">
-                Tech<span className="text-emerald-400">Partner</span>
+              <span className="text-base font-semibold tracking-tight text-white">
+                TechPartner
               </span>
             </button>
-            <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
-              Your dedicated monthly tech partner for AI, apps, websites, and more
-              — all for one flat fee.
+            <p className="text-sm text-slate-600 leading-relaxed max-w-[240px]">
+              Your dedicated monthly tech partner for AI, apps, websites, and more — all for one flat fee.
             </p>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-medium text-slate-400 uppercase tracking-[0.15em] mb-5">
               Services
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {[
                 { label: "AI Automation", page: "services" },
                 { label: "Custom Apps", page: "services" },
@@ -226,7 +212,7 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
                 <li key={item.label}>
                   <button
                     onClick={() => navigate(item.page)}
-                    className="text-sm text-slate-500 hover:text-emerald-400 transition-colors"
+                    className="text-sm text-slate-600 hover:text-slate-300 transition-colors"
                   >
                     {item.label}
                   </button>
@@ -237,10 +223,10 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
 
           {/* Company */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-medium text-slate-400 uppercase tracking-[0.15em] mb-5">
               Company
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {[
                 { label: "How It Works", page: "how-it-works" },
                 { label: "Pricing", page: "pricing" },
@@ -250,7 +236,7 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
                 <li key={item.label}>
                   <button
                     onClick={() => navigate(item.page)}
-                    className="text-sm text-slate-500 hover:text-emerald-400 transition-colors"
+                    className="text-sm text-slate-600 hover:text-slate-300 transition-colors"
                   >
                     {item.label}
                   </button>
@@ -261,19 +247,19 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
 
           {/* Quick Stats */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-medium text-slate-400 uppercase tracking-[0.15em] mb-5">
               Why TechPartner
             </h4>
             <ul className="space-y-3">
               {[
-                { icon: DollarSign, text: "Flat $200/mo — no surprises" },
-                { icon: Clock, text: "48-hour priority response" },
+                { icon: DollarSign, text: "Flat $200/mo" },
+                { icon: Clock, text: "48-hour response" },
                 { icon: Zap, text: "3–7 day delivery" },
-                { icon: Wrench, text: "30+ services included" },
+                { icon: Wrench, text: "30+ services" },
               ].map((item) => (
                 <li key={item.text} className="flex items-center gap-2.5">
-                  <item.icon className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span className="text-sm text-slate-500">{item.text}</span>
+                  <item.icon className="w-3.5 h-3.5 text-emerald-500/70 shrink-0" />
+                  <span className="text-sm text-slate-600">{item.text}</span>
                 </li>
               ))}
             </ul>
@@ -281,12 +267,12 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-600">
+        <div className="mt-14 pt-8 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-slate-700">
             &copy; {new Date().getFullYear()} TechPartner. All rights reserved.
           </p>
-          <p className="text-xs text-slate-600">
-            No contracts. Cancel anytime. Built for businesses that move fast.
+          <p className="text-xs text-slate-700">
+            No contracts. Cancel anytime.
           </p>
         </div>
       </div>
@@ -318,17 +304,14 @@ export default function TechPartnerApp() {
 
   const navigate = useCallback((page: string) => {
     setCurrentPage(page);
-    // Update URL hash for deep linking
     if (page === "home") {
       window.history.replaceState(null, "", "/");
     } else {
       window.history.replaceState(null, "", `#/${page}`);
     }
-    // Scroll to top on page change
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
-  // Handle hash changes (back/forward browser navigation)
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace("#/", "");
@@ -339,15 +322,13 @@ export default function TechPartnerApp() {
       }
     };
 
-    // Set initial page from hash
     handleHash();
-
     window.addEventListener("hashchange", handleHash);
     return () => window.removeEventListener("hashchange", handleHash);
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col noise-overlay relative">
+    <div className="min-h-screen flex flex-col bg-[#050a12] text-slate-200">
       <Navbar currentPage={currentPage} navigate={navigate} />
 
       <AnimatePresence mode="wait">
