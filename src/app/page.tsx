@@ -87,7 +87,7 @@ function Navbar({
             onClick={() => go("home")}
             className="flex items-center gap-2.5 group"
           >
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center transition-transform group-hover:scale-105">
+            <div className="w-8 h-8 rounded-sm bg-emerald-500 flex items-center justify-center transition-transform group-hover:scale-105">
               <Cpu className="w-4 h-4 text-white" />
             </div>
             <span className="text-[15px] font-semibold tracking-tight text-white">
@@ -101,7 +101,7 @@ function Navbar({
               <button
                 key={link.page}
                 onClick={() => go(link.page)}
-                className={`px-3.5 py-2 text-[13px] rounded-md transition-all duration-200 ${
+                className={`px-3.5 py-2 text-[13px] rounded-sm transition-all duration-200 ${
                   currentPage === link.page
                     ? "text-white font-medium bg-white/[0.04]"
                     : "text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]"
@@ -115,7 +115,7 @@ function Navbar({
           {/* Desktop CTA */}
           <div className="hidden lg:block">
             <button onClick={() => go("contact")}>
-              <span className="inline-flex items-center gap-2 text-[13px] font-medium text-[#050a12] bg-white hover:bg-slate-100 px-5 py-2 rounded-lg transition-colors">
+              <span className="inline-flex items-center gap-2 text-[13px] font-medium text-[#050a12] bg-white hover:bg-slate-100 px-5 py-2 rounded-sm transition-colors">
                 Get Started
                 <ArrowRight className="w-3.5 h-3.5" />
               </span>
@@ -147,7 +147,7 @@ function Navbar({
                 <button
                   key={link.page}
                   onClick={() => go(link.page)}
-                  className={`block w-full text-left px-3 py-2.5 text-sm rounded-lg transition-colors ${
+                  className={`block w-full text-left px-3 py-2.5 text-sm rounded-sm transition-colors ${
                     currentPage === link.page
                       ? "text-white font-medium bg-white/[0.04]"
                       : "text-slate-500 hover:text-slate-300"
@@ -158,7 +158,7 @@ function Navbar({
               ))}
               <div className="pt-4 mt-3 border-t border-white/[0.04]">
                 <button onClick={() => go("contact")} className="w-full">
-                  <span className="inline-flex items-center justify-center gap-2 w-full text-sm font-medium text-[#050a12] bg-white hover:bg-slate-100 px-4 py-2.5 rounded-lg transition-colors">
+                  <span className="inline-flex items-center justify-center gap-2 w-full text-sm font-medium text-[#050a12] bg-white hover:bg-slate-100 px-4 py-2.5 rounded-sm transition-colors">
                     Get Started
                     <ArrowRight className="w-4 h-4" />
                   </span>
@@ -184,7 +184,7 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
               onClick={() => navigate("home")}
               className="flex items-center gap-2.5 mb-4"
             >
-              <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-sm bg-emerald-500 flex items-center justify-center">
                 <Cpu className="w-4 h-4 text-white" />
               </div>
               <span className="text-[15px] font-semibold tracking-tight text-white">

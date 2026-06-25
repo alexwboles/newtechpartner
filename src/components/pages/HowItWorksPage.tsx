@@ -140,7 +140,7 @@ export default function HowItWorksPage({
       <section className="py-12">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
           <AnimatedSection>
-            <div className="relative rounded-2xl overflow-hidden aspect-[16/9]">
+            <div className="relative rounded-sm overflow-hidden aspect-[16/9]">
               <Image
                 src="/img/hands-typing.jpg"
                 alt="Professional working on a laptop"
@@ -170,7 +170,7 @@ export default function HowItWorksPage({
             </p>
             <button
               onClick={() => navigate("contact")}
-              className="bg-white text-[#050a12] font-semibold rounded-lg hover:bg-slate-100 px-8 py-3 text-sm transition-colors"
+              className="bg-white text-[#050a12] font-semibold rounded-sm hover:bg-slate-100 px-8 py-3 text-sm transition-colors"
             >
               Get Started
             </button>

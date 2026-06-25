@@ -146,7 +146,7 @@ export default function FAQPage({
             </p>
             <button
               onClick={() => navigate("contact")}
-              className="bg-white text-[#050a12] font-semibold rounded-lg hover:bg-slate-100 px-8 py-2.5 text-sm transition-colors"
+              className="bg-white text-[#050a12] font-semibold rounded-sm hover:bg-slate-100 px-8 py-2.5 text-sm transition-colors"
             >
               Contact Us
             </button>

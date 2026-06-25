@@ -236,7 +236,7 @@ export default function ServicesPage({
                   service.reversed ? "lg:order-2" : "lg:order-1"
                 }
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm">
                   <Image
                     src={service.image}
                     alt={service.title}
@@ -294,7 +294,7 @@ export default function ServicesPage({
             <AnimatedSection key={service.title} delay={index * 0.05}>
               <div className="pro-card p-6 h-full">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                  <div className="w-9 h-9 rounded-sm bg-emerald-500/10 flex items-center justify-center text-emerald-400">
                     {service.icon}
                   </div>
                   <h3 className="text-sm font-semibold text-white">
@@ -332,7 +332,7 @@ export default function ServicesPage({
         <AnimatedSection delay={0.16}>
           <Button
             onClick={() => navigate("contact")}
-            className="bg-white text-[#050a12] font-semibold px-8 py-3.5 rounded-lg hover:bg-slate-100 h-auto"
+            className="bg-white text-[#050a12] font-semibold px-8 py-3.5 rounded-sm hover:bg-slate-100 h-auto"
           >
             Get in Touch
             <ArrowRight className="ml-2 h-4 w-4" />

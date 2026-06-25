@@ -310,4 +310,23 @@ Stage Summary:
 - Complete professional redesign: removed all "vibe coded" elements
 - Animated gradient background (hero-video-bg) creates dynamic "video" effect
 - Clean, confident design inspired by Linear/Vercel aesthetic
-- All pages verified working in agent-browser with zero errors
+- All pages verified working in agent-browser with zero errors---
+Task ID: 1
+Agent: Main
+Task: Make boxes/buttons more square (reduce border-radius) + restyle ContactPage for professionalism
+
+Work Log:
+- Read all page components (HomePage, ServicesPage, PricingPage, HowItWorksPage, FAQPage, ContactPage) and globals.css
+- Reduced --radius CSS variable from 0.625rem to 0.25rem (affects all shadcn components)
+- Reduced .pro-card border-radius from 12px to 3px
+- Reduced .service-img-wrapper border-radius from 8px to 3px
+- Changed all rounded-lg → rounded-sm, rounded-xl → rounded-sm, rounded-2xl → rounded-sm across 7 files
+- Kept rounded-full only for intentional circles (step numbers, check icons)
+- Completely redesigned ContactPage with professional styling: bottom-border-only inputs, no card wrapper, business contact info (email/response time/availability), "What to expect" numbered steps, clean navigation links
+- Verified no compilation errors, lint passes clean, no JS runtime errors
+- Agent-browser verified all pages render correctly with square corners
+
+Stage Summary:
+- All boxes, buttons, images, and cards now use minimal border-radius (2-3px) for a sharp, professional look
+- ContactPage redesigned with underline-style form fields, business contact info sidebar, and numbered process steps
+- Dev server running cleanly on port 3000

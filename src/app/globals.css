@@ -44,7 +44,7 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.25rem;
   --background: #050a12;
   --foreground: #e2e8f0;
   --card: #0c1322;
@@ -146,7 +146,7 @@
 .pro-card {
   background: #0c1322;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  border-radius: 3px;
   transition: all 0.25s ease;
 }
 .pro-card:hover {
@@ -179,7 +179,7 @@
 /* ─── Service card image hover ─── */
 .service-img-wrapper {
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 3px;
 }
 .service-img-wrapper img {
   transition: transform 0.5s ease;

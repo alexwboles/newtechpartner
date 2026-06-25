@@ -123,7 +123,7 @@ export default function PricingPage({
             {/* Right card: TechPartner */}
             <AnimatedSection delay={0.2}>
               <div className="pro-card border-emerald-500/20 p-8 sm:p-10 h-full flex flex-col relative">
-                <Badge className="absolute top-4 right-4 bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold tracking-wider px-2.5 py-0.5 rounded border-0">
+                <Badge className="absolute top-4 right-4 bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold tracking-wider px-2.5 py-0.5 rounded-sm border-0">
                   RECOMMENDED
                 </Badge>
 
@@ -149,7 +149,7 @@ export default function PricingPage({
                   </div>
                   <button
                     onClick={() => navigate("contact")}
-                    className="bg-white text-[#050a12] font-semibold rounded-lg hover:bg-slate-100 px-6 py-2.5 text-sm transition-colors"
+                    className="bg-white text-[#050a12] font-semibold rounded-sm hover:bg-slate-100 px-6 py-2.5 text-sm transition-colors"
                   >
                     Get Started
                   </button>

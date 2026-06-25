@@ -103,7 +103,7 @@ export default function HomePage({
           >
             <Button
               onClick={() => navigate("contact")}
-              className="bg-white text-[#050a12] font-semibold px-8 py-3.5 rounded-lg hover:bg-slate-100 transition-colors h-auto text-base cursor-pointer"
+              className="bg-white text-[#050a12] font-semibold px-8 py-3.5 rounded-sm hover:bg-slate-100 transition-colors h-auto text-base cursor-pointer"
             >
               Get Started
               <ArrowRight className="ml-2 w-4 h-4" />
@@ -111,7 +111,7 @@ export default function HomePage({
             <Button
               onClick={() => navigate("services")}
               variant="outline"
-              className="border-white/20 text-white px-8 py-3.5 rounded-lg hover:bg-white/5 transition-colors h-auto text-base bg-transparent cursor-pointer"
+              className="border-white/20 text-white px-8 py-3.5 rounded-sm hover:bg-white/5 transition-colors h-auto text-base bg-transparent cursor-pointer"
             >
               View Services
             </Button>
@@ -174,7 +174,7 @@ export default function HomePage({
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Image */}
             <AnimatedSection>
-              <div className="rounded-2xl overflow-hidden aspect-[4/3]">
+              <div className="rounded-sm overflow-hidden aspect-[4/3]">
                 <Image
                   src="/img/team-collab.jpg"
                   alt="Team collaborating on a project"
@@ -257,7 +257,7 @@ export default function HomePage({
                 <Button
                   onClick={() => navigate("services")}
                   variant="outline"
-                  className="border-white/20 text-white px-8 py-3.5 rounded-lg hover:bg-white/5 transition-colors h-auto text-sm bg-transparent cursor-pointer"
+                  className="border-white/20 text-white px-8 py-3.5 rounded-sm hover:bg-white/5 transition-colors h-auto text-sm bg-transparent cursor-pointer"
                 >
                   See All Services
                   <ArrowRight className="ml-2 w-4 h-4" />
@@ -267,7 +267,7 @@ export default function HomePage({
 
             {/* Right: Image */}
             <AnimatedSection delay={0.15}>
-              <div className="rounded-2xl overflow-hidden aspect-square">
+              <div className="rounded-sm overflow-hidden aspect-square">
                 <Image
                   src="/img/ai-chatbot.jpg"
                   alt="AI chatbot interface on a phone"
@@ -306,7 +306,7 @@ export default function HomePage({
             </p>
             <Button
               onClick={() => navigate("contact")}
-              className="bg-white text-[#050a12] font-semibold px-10 py-4 rounded-lg text-lg hover:bg-slate-100 transition-colors h-auto cursor-pointer"
+              className="bg-white text-[#050a12] font-semibold px-10 py-4 rounded-sm text-lg hover:bg-slate-100 transition-colors h-auto cursor-pointer"
             >
               Get Started Today
               <ArrowRight className="ml-2 w-5 h-5" />
