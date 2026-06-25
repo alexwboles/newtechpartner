@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Cpu,
   Menu,
   XIcon,
   ArrowRight,
@@ -87,9 +86,11 @@ function Navbar({
             onClick={() => go("home")}
             className="flex items-center gap-2.5 group"
           >
-            <div className="w-8 h-8 rounded-sm bg-emerald-500 flex items-center justify-center transition-transform group-hover:scale-105">
-              <Cpu className="w-4 h-4 text-white" />
-            </div>
+            <img
+              src="/img/logo.png"
+              alt="TechPartner"
+              className="w-8 h-8 rounded-sm object-cover transition-transform group-hover:scale-105"
+            />
             <span className="text-[15px] font-semibold tracking-tight text-white">
               TechPartner
             </span>
@@ -184,9 +185,11 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
               onClick={() => navigate("home")}
               className="flex items-center gap-2.5 mb-4"
             >
-              <div className="w-8 h-8 rounded-sm bg-emerald-500 flex items-center justify-center">
-                <Cpu className="w-4 h-4 text-white" />
-              </div>
+              <img
+                src="/img/logo.png"
+                alt="TechPartner"
+                className="w-8 h-8 rounded-sm object-cover"
+              />
               <span className="text-[15px] font-semibold tracking-tight text-white">
                 TechPartner
               </span>

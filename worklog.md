@@ -356,3 +356,26 @@ Stage Summary:
 - FAQ: subtle radial gradient atmosphere
 - Contact: workspace background image with gradient overlay
 - All new assets: 1 video + 3 AI images + 9 total images in public/img/
+
+---
+Task ID: 10
+Agent: Main Agent
+Task: Add TechPartner logo to navbar/footer and add background video to Contact page
+
+Work Log:
+- Analyzed uploaded TechPartner logo using VLM: white network icon on dark navy blue background, no text
+- Copied logo from /upload/ to /public/img/logo.png
+- Replaced Cpu icon in Navbar with actual logo image (img tag, 32x32, rounded-sm)
+- Replaced Cpu icon in Footer with actual logo image (img tag, 32x32, rounded-sm)
+- Removed unused Cpu import from page.tsx
+- Deleted symlink /public/video/contact-bg.mp4 (was pointing to hero-bg.mp4)
+- Downloaded unique background video for Contact page from Pexels (SD 640x360, 1.4MB)
+- Verified with Agent Browser: logo visible in navbar and footer on all pages
+- Verified Contact page has unique background video (abstract digital/network pattern)
+- ESLint passes clean, dev server running without errors
+
+Stage Summary:
+- Updated `/home/z/my-project/src/app/page.tsx` — Logo icon replaced with actual TechPartner logo image in Navbar and Footer
+- Added `/home/z/my-project/public/img/logo.png` — TechPartner brand logo (1024x1024 PNG)
+- Added `/home/z/my-project/public/video/contact-bg.mp4` — Unique abstract tech video for Contact page background (1.4MB)
+- Contact page now has its own distinct background video, different from the homepage
