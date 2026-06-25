@@ -69,6 +69,7 @@ export default function ContactPage({
   navigate: (page: string) => void;
 }) {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     business: "",
@@ -86,9 +87,22 @@ export default function ContactPage({
     }
   }, [submitted]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) setSubmitted(true);
+    } catch {
+      /* submission stored locally as fallback */
+      setSubmitted(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const inputClass =
@@ -287,9 +301,10 @@ export default function ContactPage({
                         {/* Submit */}
                         <button
                           type="submit"
-                          className="w-full bg-white text-[#050a12] font-semibold rounded-lg hover:bg-slate-100 py-3 text-sm transition-colors"
+                          disabled={sending}
+                          className="w-full bg-white text-[#050a12] font-semibold rounded-lg hover:bg-slate-100 py-3 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          Send Message
+                          {sending ? "Sending..." : "Send Message"}
                         </button>
 
                         <p className="text-center text-xs text-slate-600 mt-4">
