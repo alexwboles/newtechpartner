@@ -4,6 +4,7 @@ import { useRef, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 import { Check, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 /* ------------------------------------------------------------------ */
 /*  AnimatedSection — subtle fade-up on scroll                        */
@@ -88,74 +89,96 @@ export default function PricingPage({
         </div>
       </section>
 
-      {/* ----- 2. Comparison Cards ----- */}
+      {/* ----- 2. Image + Comparison Cards ----- */}
       <section>
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
-          <div className="grid lg:grid-cols-2 gap-6 items-stretch">
-            {/* Left card: Traditional Approach */}
-            <AnimatedSection delay={0.1}>
-              <div className="pro-card p-8 sm:p-10 h-full flex flex-col">
-                <p className="text-xs uppercase tracking-wider text-slate-500 mb-8">
-                  Traditional Approach
-                </p>
-
-                <div className="flex-1">
-                  {traditionalRoles.map((item) => (
-                    <div
-                      key={item.role}
-                      className="flex justify-between items-center py-4 border-b border-white/[0.04] last:border-0"
-                    >
-                      <span className="text-white/80">{item.role}</span>
-                      <span className="text-slate-400">{item.cost}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-6 flex justify-between items-center pt-6 border-t border-white/[0.08]">
-                  <span className="text-white font-medium">Total</span>
-                  <span className="text-red-400 font-bold text-xl">
-                    $10,300+/mo
-                  </span>
-                </div>
+          <div className="grid lg:grid-cols-5 gap-8 items-stretch">
+            {/* Left: Image */}
+            <AnimatedSection className="lg:col-span-2" delay={0.05}>
+              <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full w-full overflow-hidden rounded-sm">
+                <Image
+                  src="/img/pricing-value.jpg"
+                  alt="Business consultation"
+                  fill
+                  unoptimized
+                  className="object-cover w-full h-full"
+                />
               </div>
             </AnimatedSection>
 
-            {/* Right card: TechPartner */}
-            <AnimatedSection delay={0.2}>
-              <div className="pro-card border-emerald-500/20 p-8 sm:p-10 h-full flex flex-col relative">
-                <Badge className="absolute top-4 right-4 bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold tracking-wider px-2.5 py-0.5 rounded-sm border-0">
-                  RECOMMENDED
-                </Badge>
+            {/* Right: Comparison Cards */}
+            <div className="lg:col-span-3 grid md:grid-cols-2 gap-6 items-stretch">
+              {/* Traditional Approach Card */}
+              <AnimatedSection delay={0.1}>
+                <div className="pro-card p-8 h-full flex flex-col">
+                  <p className="text-xs uppercase tracking-wider text-slate-500 mb-8">
+                    Traditional Approach
+                  </p>
 
-                <p className="text-xs uppercase tracking-wider text-emerald-400 mb-8">
-                  TechPartner
-                </p>
-
-                <ul className="flex-1 space-y-3.5">
-                  {techPartnerFeatures.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3">
-                      <div className="h-5 w-5 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
-                        <Check className="h-3 w-3 text-emerald-400" />
+                  <div className="flex-1">
+                    {traditionalRoles.map((item) => (
+                      <div
+                        key={item.role}
+                        className="flex justify-between items-center py-4 border-b border-white/[0.04] last:border-0"
+                      >
+                        <span className="text-white/80 text-sm">
+                          {item.role}
+                        </span>
+                        <span className="text-slate-400 text-sm">
+                          {item.cost}
+                        </span>
                       </div>
-                      <span className="text-white/80 text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-8 flex justify-between items-end pt-6 border-t border-white/[0.08]">
-                  <div>
-                    <span className="text-4xl font-bold text-white">$200</span>
-                    <span className="text-slate-500 ml-1.5">/month</span>
+                    ))}
                   </div>
-                  <button
-                    onClick={() => navigate("contact")}
-                    className="bg-white text-[#050a12] font-semibold rounded-sm hover:bg-slate-100 px-6 py-2.5 text-sm transition-colors"
-                  >
-                    Get Started
-                  </button>
+
+                  <div className="mt-6 flex justify-between items-center pt-6 border-t border-white/[0.08]">
+                    <span className="text-white font-medium">Total</span>
+                    <span className="text-red-400 font-bold text-xl">
+                      $10,300+/mo
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </AnimatedSection>
+              </AnimatedSection>
+
+              {/* TechPartner Card */}
+              <AnimatedSection delay={0.2}>
+                <div className="pro-card border-emerald-500/20 p-8 h-full flex flex-col relative">
+                  <Badge className="absolute top-4 right-4 bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold tracking-wider px-2.5 py-0.5 rounded-sm border-0">
+                    RECOMMENDED
+                  </Badge>
+
+                  <p className="text-xs uppercase tracking-wider text-emerald-400 mb-8">
+                    TechPartner
+                  </p>
+
+                  <ul className="flex-1 space-y-3">
+                    {techPartnerFeatures.map((feature) => (
+                      <li key={feature} className="flex items-center gap-3">
+                        <div className="h-5 w-5 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
+                          <Check className="h-3 w-3 text-emerald-400" />
+                        </div>
+                        <span className="text-white/80 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-8 flex justify-between items-end pt-6 border-t border-white/[0.08]">
+                    <div>
+                      <span className="text-4xl font-bold text-white">
+                        $200
+                      </span>
+                      <span className="text-slate-500 ml-1.5">/month</span>
+                    </div>
+                    <button
+                      onClick={() => navigate("contact")}
+                      className="bg-white text-[#050a12] font-semibold rounded-sm hover:bg-slate-100 px-6 py-2.5 text-sm transition-colors"
+                    >
+                      Get Started
+                    </button>
+                  </div>
+                </div>
+              </AnimatedSection>
+            </div>
           </div>
         </div>
       </section>

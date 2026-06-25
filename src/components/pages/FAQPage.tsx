@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
@@ -9,27 +8,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-/* ------------------------------------------------------------------ */
-/*  AnimatedSection — simple fade-up on scroll                        */
-/* ------------------------------------------------------------------ */
-function AnimatedSection({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+interface FAQPageProps {
+  navigate: (page: string) => void;
+}
 
+function AnimatedSection({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={className}
     >
       {children}
@@ -37,10 +26,7 @@ function AnimatedSection({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  FAQ Data                                                           */
-/* ------------------------------------------------------------------ */
-const faqItems = [
+const faqs = [
   {
     question: "What exactly do I get for $200/month?",
     answer:
@@ -78,33 +64,22 @@ const faqItems = [
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  FAQPage                                                            */
-/* ------------------------------------------------------------------ */
-export default function FAQPage({
-  navigate,
-}: {
-  navigate: (page: string) => void;
-}) {
+export default function FAQPage({ navigate }: FAQPageProps) {
   return (
     <div className="min-h-screen">
-      {/* ----- 1. Header ----- */}
-      <section className="pt-32 pb-16 text-center">
+      {/* Page Header */}
+      <section
+        className="relative bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.04),transparent_70%)] pt-32 pb-16 text-center"
+      >
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
           <AnimatedSection>
-            <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-medium mb-6">
+            <span className="inline-block text-xs font-semibold uppercase tracking-widest text-emerald-400 mb-5">
               FAQ
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection delay={0.1}>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-5">
               Frequently Asked Questions
             </h1>
-          </AnimatedSection>
-
-          <AnimatedSection delay={0.2}>
-            <p className="mt-5 text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-slate-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
               Everything you need to know about TechPartner. Can&apos;t find
               what you&apos;re looking for? Reach out directly.
             </p>
@@ -112,46 +87,46 @@ export default function FAQPage({
         </div>
       </section>
 
-      {/* ----- 2. FAQ Accordion ----- */}
-      <section className="max-w-[720px] mx-auto px-6 sm:px-8">
-        <AnimatedSection delay={0.1}>
-          <Accordion type="single" collapsible>
-            {faqItems.map((item, index) => (
-              <AccordionItem
-                key={index}
-                value={`faq-${index}`}
-                className="border-b border-white/[0.06]"
-              >
-                <AccordionTrigger className="px-0 py-5 text-left text-[15px] text-white font-medium hover:no-underline hover:text-white [&[data-state=open]>svg]:text-emerald-400">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="pb-5 text-sm text-slate-400 leading-relaxed">
-                  {item.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </AnimatedSection>
-      </section>
-
-      {/* ----- 3. CTA ----- */}
-      <section className="py-20 text-center">
-        <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
+      {/* FAQ Accordion */}
+      <section className="py-16">
+        <div className="max-w-[720px] mx-auto px-6 sm:px-8">
           <AnimatedSection>
-            <h3 className="text-2xl font-medium text-white mb-2">
-              Still have questions?
-            </h3>
-            <p className="text-sm text-slate-400 mb-8">
-              We&apos;re happy to help. No commitment, no pressure.
-            </p>
-            <button
-              onClick={() => navigate("contact")}
-              className="bg-white text-[#050a12] font-semibold rounded-sm hover:bg-slate-100 px-8 py-2.5 text-sm transition-colors"
-            >
-              Contact Us
-            </button>
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((faq, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                  className="border-b border-white/[0.06]"
+                >
+                  <AccordionTrigger className="px-0 py-5 text-left text-[15px] text-white font-medium hover:no-underline hover:text-white [&[data-state=open]>svg]:text-emerald-400">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-5 text-sm text-slate-400 leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </AnimatedSection>
         </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="py-20 text-center">
+        <AnimatedSection>
+          <h3 className="text-2xl font-medium text-white mb-2">
+            Still have questions?
+          </h3>
+          <p className="text-sm text-slate-400 mb-8">
+            We&apos;re happy to help. No commitment, no pressure.
+          </p>
+          <button
+            onClick={() => navigate("contact")}
+            className="rounded-sm bg-white text-[#050a12] font-semibold px-8 py-2.5 text-sm hover:bg-slate-100 transition-colors cursor-pointer"
+          >
+            Contact Us
+          </button>
+        </AnimatedSection>
       </section>
     </div>
   );

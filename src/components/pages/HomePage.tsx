@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -40,15 +40,18 @@ export default function HomePage({
 }: {
   navigate: (page: string) => void;
 }) {
+  const [videoReady, setVideoReady] = useState(false);
+
   return (
     <div>
       {/* ──────────────── 1. HERO ──────────────── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated gradient fallback (visible behind / if image fails) */}
-        <div className="absolute inset-0 hero-video-bg" />
-
-        {/* Ken Burns background image */}
-        <div className="absolute inset-0">
+        {/* Ken Burns image fallback — visible until video is ready, then hidden behind it */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            videoReady ? "opacity-0" : "opacity-100"
+          }`}
+        >
           <Image
             src="/img/hero-office.jpg"
             alt=""
@@ -58,6 +61,20 @@ export default function HomePage({
             priority
           />
         </div>
+
+        {/* Primary video background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          onCanPlayThrough={() => setVideoReady(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            videoReady ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <source src="/video/hero-bg.mp4" type="video/mp4" />
+        </video>
 
         {/* Overlays */}
         <div className="absolute inset-0 hero-overlay" />
@@ -128,7 +145,7 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* ──────────────── 2. LOGO STRIP ──────────────── */}
+      {/* ──────────────── 2. LOGO / INDUSTRY STRIP ──────────────── */}
       <section className="py-16">
         <div className="section-divider" />
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8 mt-16">
@@ -265,14 +282,14 @@ export default function HomePage({
               </div>
             </AnimatedSection>
 
-            {/* Right: Image */}
+            {/* Right: Image — 4:3 aspect, NOT square */}
             <AnimatedSection delay={0.15}>
-              <div className="rounded-sm overflow-hidden aspect-square">
+              <div className="rounded-sm overflow-hidden aspect-[4/3]">
                 <Image
                   src="/img/ai-chatbot.jpg"
                   alt="AI chatbot interface on a phone"
-                  width={1024}
-                  height={1024}
+                  width={1344}
+                  height={768}
                   unoptimized
                   className="object-cover w-full h-full"
                 />
@@ -284,13 +301,13 @@ export default function HomePage({
 
       {/* ──────────────── 5. FINAL CTA ──────────────── */}
       <section className="py-32 relative overflow-hidden">
-        {/* Background image at 15% opacity */}
+        {/* Background image at 12% opacity */}
         <Image
           src="/img/tech-abstract.jpg"
           alt=""
           fill
           unoptimized
-          className="object-cover w-full h-full opacity-[0.15]"
+          className="object-cover w-full h-full opacity-[0.12]"
         />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#050a12] via-[#050a12]/80 to-[#050a12]/60" />

@@ -8,10 +8,10 @@ import {
   ArrowRight,
   Check,
   Phone,
-  MapPin,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
 
 /* ------------------------------------------------------------------ */
 /*  AnimatedSection — subtle fade-up on scroll                        */
@@ -133,35 +133,55 @@ export default function ContactPage({
 
   return (
     <div className="min-h-screen">
-      {/* ----- 1. Header ----- */}
-      <section className="pt-32 pb-12">
+      {/* ----- 1. Background Image + Header ----- */}
+      <section className="relative overflow-hidden">
+        {/* Background image at very low opacity */}
+        <Image
+          src="/img/contact-bg.jpg"
+          alt=""
+          fill
+          unoptimized
+          className="object-cover opacity-[0.07]"
+          aria-hidden="true"
+        />
+        {/* Gradient overlay to fade image into dark background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050a12]/50 to-[#050a12]" />
+
+        {/* Header content */}
+        <div className="relative z-10 pt-32 pb-12">
+          <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
+            <AnimatedSection>
+              <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-medium mb-6">
+                Contact
+              </p>
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.1}>
+              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.15]">
+                Let&apos;s Talk
+              </h1>
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.2}>
+              <p className="mt-5 text-slate-400 text-[15px] leading-relaxed max-w-lg">
+                Tell us about your business and the challenges you&apos;re
+                facing. We&apos;ll get back to you with a custom plan — no
+                commitment, no pressure.
+              </p>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ----- 2. Two-Column Layout ----- */}
+      <section>
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
-          <AnimatedSection>
-            <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-medium mb-6">
-              Contact
-            </p>
-          </AnimatedSection>
-
           <div className="grid lg:grid-cols-5 gap-16 lg:gap-20">
-            {/* Left: Heading + Contact Info */}
+            {/* Left: Contact Info + What to Expect */}
             <div className="lg:col-span-2">
-              <AnimatedSection delay={0.1}>
-                <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.15]">
-                  Let&apos;s Talk
-                </h1>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.2}>
-                <p className="mt-5 text-slate-400 text-[15px] leading-relaxed max-w-sm">
-                  Tell us about your business and the challenges you&apos;re
-                  facing. We&apos;ll get back to you with a custom plan — no
-                  commitment, no pressure.
-                </p>
-              </AnimatedSection>
-
               {/* Contact info */}
-              <AnimatedSection delay={0.3}>
-                <div className="mt-10 space-y-5">
+              <AnimatedSection>
+                <div className="space-y-5">
                   {contactInfo.map((item) => {
                     const Icon = item.icon;
                     return (
@@ -194,7 +214,7 @@ export default function ContactPage({
               <div className="mt-10 section-divider" />
 
               {/* What to expect */}
-              <AnimatedSection delay={0.4}>
+              <AnimatedSection delay={0.1}>
                 <p className="text-xs uppercase tracking-[0.15em] text-slate-500 mb-6">
                   What to expect
                 </p>
@@ -220,7 +240,7 @@ export default function ContactPage({
 
             {/* Right: Form */}
             <div className="lg:col-span-3">
-              <AnimatedSection delay={0.15}>
+              <AnimatedSection>
                 <div className="border-t border-white/[0.06] pt-10">
                   <AnimatePresence mode="wait">
                     {submitted ? (
@@ -376,17 +396,16 @@ export default function ContactPage({
         </div>
       </section>
 
-      {/* ----- 2. Bottom CTA ----- */}
+      {/* ----- 3. Bottom Navigation ----- */}
       <section className="py-24 border-t border-white/[0.04]">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8 text-center">
           <AnimatedSection>
-            <p className="text-sm text-slate-500 max-w-md mx-auto leading-relaxed">
-              Not ready to reach out? Browse our services, pricing, or FAQ to
-              learn more about what TechPartner can do for your business.
+            <p className="text-sm text-slate-500">
+              Not ready to reach out?
             </p>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
-            <div className="flex items-center justify-center gap-4 mt-6">
+            <div className="flex items-center justify-center gap-4 mt-4">
               <button
                 onClick={() => navigate("services")}
                 className="text-sm text-slate-400 hover:text-white transition-colors"

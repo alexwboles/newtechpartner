@@ -330,3 +330,29 @@ Stage Summary:
 - All boxes, buttons, images, and cards now use minimal border-radius (2-3px) for a sharp, professional look
 - ContactPage redesigned with underline-style form fields, business contact info sidebar, and numbered process steps
 - Dev server running cleanly on port 3000
+---
+Task ID: 2
+Agent: Main + 6 subagents
+Task: Comprehensive visual overhaul of all 6 pages - unique visuals, cohesive design, background video, relevant images
+
+Work Log:
+- Downloaded stock video from Pixabay CDN (1920x1080, 10s, H.264, 6.4MB) to public/video/hero-bg.mp4
+- Generated 3 new AI images: services-hero.jpg, pricing-value.jpg, contact-bg.jpg (all 1344x768)
+- Updated globals.css with new utility classes: hero-video, page-hero, film-grain, img-reveal, featured-img, wide-image-section, line-accent
+- Rewrote HomePage: real <video> background with Ken Burns image fallback, crossfade on video ready
+- Rewrote ServicesPage: full-width hero image (services-hero.jpg at 8% opacity) behind page title with line accents
+- Rewrote PricingPage: 5-column grid with pricing-value.jpg on left (col-span-2), comparison cards on right (col-span-3)
+- Rewrote HowItWorksPage: maintained vertical timeline with enhanced image section
+- Rewrote FAQPage: subtle emerald radial gradient background for visual depth
+- Rewrote ContactPage: contact-bg.jpg at 7% opacity with gradient fade overlay behind form
+- Verified all pages with agent-browser: video element found, all forms working, no JS errors, clean lint
+
+Stage Summary:
+- Each page now has a unique visual signature while maintaining cohesive dark theme
+- Homepage: real video background with image fallback
+- Services: panoramic hero image behind title
+- Pricing: side-by-side image + card layout
+- How It Works: timeline + full-width image break
+- FAQ: subtle radial gradient atmosphere
+- Contact: workspace background image with gradient overlay
+- All new assets: 1 video + 3 AI images + 9 total images in public/img/

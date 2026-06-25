@@ -203,29 +203,43 @@ export default function ServicesPage({
 }) {
   return (
     <section className="min-h-screen">
-      {/* ── 1. Page Header ────────────────────────────────────────── */}
-      <div className="pt-32 pb-16 max-w-[1200px] mx-auto px-6 sm:px-8 text-center">
-        <AnimatedSection>
-          <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-medium mb-4">
-            Our Services
-          </p>
-        </AnimatedSection>
+      {/* ── 1. Page Hero ───────────────────────────────────────────── */}
+      <div className="relative overflow-hidden pt-36 pb-20">
+        {/* Background image at low opacity */}
+        <Image
+          src="/img/services-hero.jpg"
+          alt=""
+          fill
+          unoptimized
+          className="object-cover w-full h-full opacity-[0.12]"
+        />
 
-        <AnimatedSection delay={0.08}>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
-            30+ Services. One Flat Rate.
-          </h1>
-        </AnimatedSection>
+        {/* Centered content */}
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6 sm:px-8 text-center">
+          <AnimatedSection>
+            <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-medium mb-5 inline-flex items-center gap-3">
+              <span className="inline-block w-6 h-px bg-emerald-400" />
+              OUR SERVICES
+              <span className="inline-block w-6 h-px bg-emerald-400" />
+            </p>
+          </AnimatedSection>
 
-        <AnimatedSection delay={0.16}>
-          <p className="max-w-lg mx-auto text-slate-400 text-lg mt-5 leading-relaxed">
-            Everything your business needs to run on modern technology —
-            starting today.
-          </p>
-        </AnimatedSection>
+          <AnimatedSection delay={0.08}>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+              30+ Services. One Flat Rate.
+            </h1>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.16}>
+            <p className="max-w-lg mx-auto text-slate-400 text-lg mt-5 leading-relaxed">
+              Everything your business needs to run on modern technology —
+              starting today.
+            </p>
+          </AnimatedSection>
+        </div>
       </div>
 
-      {/* ── 2. Featured Service Sections ──────────────────────────── */}
+      {/* ── 2. Featured Service Sections ───────────────────────────── */}
       <div className="max-w-[1200px] mx-auto px-6 sm:px-8 space-y-4 pb-16">
         {featuredServices.map((service, index) => (
           <AnimatedSection key={service.num} delay={index * 0.08}>
@@ -279,7 +293,7 @@ export default function ServicesPage({
         ))}
       </div>
 
-      {/* ── 3. Complete Service List ──────────────────────────────── */}
+      {/* ── 3. Complete Service List ───────────────────────────────── */}
       <div className="max-w-[1200px] mx-auto px-6 sm:px-8 pb-20">
         <div className="section-divider mb-16" />
 
@@ -332,7 +346,7 @@ export default function ServicesPage({
         <AnimatedSection delay={0.16}>
           <Button
             onClick={() => navigate("contact")}
-            className="bg-white text-[#050a12] font-semibold px-8 py-3.5 rounded-sm hover:bg-slate-100 h-auto"
+            className="bg-white text-[#050a12] font-semibold px-8 py-3.5 rounded-sm hover:bg-slate-100 h-auto cursor-pointer"
           >
             Get in Touch
             <ArrowRight className="ml-2 h-4 w-4" />

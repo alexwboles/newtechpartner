@@ -150,8 +150,8 @@ export default function HowItWorksPage({
               />
             </div>
             <p className="text-sm text-slate-500 text-center mt-4">
-              Your dedicated tech partner — handling everything so you can focus
-              on what matters.
+              Your dedicated tech partner — handling everything so you can
+              focus on what matters.
             </p>
           </AnimatedSection>
         </div>
