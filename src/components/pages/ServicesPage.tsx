@@ -65,7 +65,7 @@ const featuredServices: FeaturedService[] = [
       "Automated appointment reminders",
       "Custom dashboards and AI tools",
     ],
-    image: "/img/ai-chatbot.jpg",
+    image: "/img/ai-automation.jpg",
     reversed: false,
   },
   {
@@ -91,7 +91,7 @@ const featuredServices: FeaturedService[] = [
       "Monthly work recaps",
       "Full system security setup",
     ],
-    image: "/img/team-collab.jpg",
+    image: "/img/security-support.jpg",
     reversed: false,
   },
 ];
