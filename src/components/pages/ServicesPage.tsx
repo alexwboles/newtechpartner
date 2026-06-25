@@ -236,7 +236,7 @@ export default function ServicesPage({
                   service.reversed ? "lg:order-2" : "lg:order-1"
                 }
               >
-                <div className="aspect-[4/3] w-full overflow-hidden rounded-xl">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
                   <Image
                     src={service.image}
                     alt={service.title}

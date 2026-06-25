@@ -140,7 +140,7 @@ export default function HowItWorksPage({
       <section className="py-12">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
           <AnimatedSection>
-            <div className="rounded-2xl overflow-hidden aspect-[16/9]">
+            <div className="relative rounded-2xl overflow-hidden aspect-[16/9]">
               <Image
                 src="/img/hands-typing.jpg"
                 alt="Professional working on a laptop"
