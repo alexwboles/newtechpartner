@@ -17,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-// ─── Inline helper: scroll-triggered fade-up ──────────────────────────
+/* ─── AnimatedSection: subtle fade-up on scroll ───────────────────── */
 function AnimatedSection({
   children,
   className = "",
@@ -33,9 +33,9 @@ function AnimatedSection({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
       className={className}
     >
       {children}
@@ -43,8 +43,9 @@ function AnimatedSection({
   );
 }
 
-// ─── Featured card data ───────────────────────────────────────────────
-interface FeaturedCard {
+/* ─── Data ─────────────────────────────────────────────────────────── */
+
+interface FeaturedService {
   num: string;
   title: string;
   description: string;
@@ -53,7 +54,7 @@ interface FeaturedCard {
   reversed: boolean;
 }
 
-const featuredCards: FeaturedCard[] = [
+const featuredServices: FeaturedService[] = [
   {
     num: "01",
     title: "AI Tools & Smart Automation",
@@ -71,7 +72,7 @@ const featuredCards: FeaturedCard[] = [
     num: "02",
     title: "Website & App Development",
     description:
-      "Custom websites, mobile-friendly booking forms, landing pages, and full apps delivered in days — not months.",
+      "Custom websites, mobile-friendly booking forms, landing pages, and full applications delivered in days — not months.",
     checks: [
       "Custom websites from scratch",
       "Apps in 7 days or less",
@@ -84,7 +85,7 @@ const featuredCards: FeaturedCard[] = [
     num: "03",
     title: "Support, Security & Systems",
     description:
-      "Business email setup, cloud storage, two-factor auth, team file sharing, and priority 48-hour support with monthly recaps.",
+      "Business email setup, cloud storage, two-factor authentication, team file sharing, and priority 48-hour support with monthly recaps.",
     checks: [
       "48-hour priority response",
       "Monthly work recaps",
@@ -95,14 +96,13 @@ const featuredCards: FeaturedCard[] = [
   },
 ];
 
-// ─── All services grid data ───────────────────────────────────────────
-interface ServiceItem {
+interface ServiceCard {
   icon: ReactNode;
   title: string;
   bullets: string[];
 }
 
-const allServices: ServiceItem[] = [
+const serviceCards: ServiceCard[] = [
   {
     icon: <Bot className="h-4 w-4" />,
     title: "AI Tools",
@@ -194,154 +194,150 @@ const allServices: ServiceItem[] = [
   },
 ];
 
-// ─── Services page ────────────────────────────────────────────────────
+/* ─── Page Component ───────────────────────────────────────────────── */
+
 export default function ServicesPage({
   navigate,
 }: {
   navigate: (page: string) => void;
 }) {
   return (
-    <section className="relative min-h-screen">
-      <div className="relative z-10">
-        {/* ── 1. PAGE HEADER ─────────────────────────────────────── */}
-        <div className="pt-32 pb-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-medium text-center mb-4">
-              OUR SERVICES
-            </p>
-          </AnimatedSection>
+    <section className="min-h-screen">
+      {/* ── 1. Page Header ────────────────────────────────────────── */}
+      <div className="pt-32 pb-16 max-w-[1200px] mx-auto px-6 sm:px-8 text-center">
+        <AnimatedSection>
+          <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-medium mb-4">
+            Our Services
+          </p>
+        </AnimatedSection>
 
-          <AnimatedSection delay={0.1}>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white text-center tracking-tight">
-              30+ Services. One Flat Rate.
-            </h1>
-          </AnimatedSection>
+        <AnimatedSection delay={0.08}>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+            30+ Services. One Flat Rate.
+          </h1>
+        </AnimatedSection>
 
-          <AnimatedSection delay={0.2}>
-            <p className="max-w-xl mx-auto text-slate-400 text-lg text-center mt-6">
-              Everything your business needs to run on modern technology —
-              starting today.
-            </p>
-          </AnimatedSection>
-        </div>
+        <AnimatedSection delay={0.16}>
+          <p className="max-w-lg mx-auto text-slate-400 text-lg mt-5 leading-relaxed">
+            Everything your business needs to run on modern technology —
+            starting today.
+          </p>
+        </AnimatedSection>
+      </div>
 
-        {/* ── 2. FEATURED SERVICES ───────────────────────────────── */}
-        <div className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {featuredCards.map((card, index) => (
-            <AnimatedSection
-              key={card.num}
-              delay={index * 0.1}
-              className="mb-4 last:mb-0"
-            >
-              <div className="grid lg:grid-cols-2 gap-0">
-                {/* Image */}
-                <div
-                  className={`relative ${
-                    card.reversed ? "lg:order-2" : "lg:order-1"
-                  }`}
-                >
-                  <div className="aspect-[4/3] w-full overflow-hidden">
-                    <Image
-                      src={card.image}
-                      alt={card.title}
-                      fill
-                      unoptimized
-                      className="object-cover w-full h-full"
-                    />
+      {/* ── 2. Featured Service Sections ──────────────────────────── */}
+      <div className="max-w-[1200px] mx-auto px-6 sm:px-8 space-y-4 pb-16">
+        {featuredServices.map((service, index) => (
+          <AnimatedSection key={service.num} delay={index * 0.08}>
+            <div className="grid lg:grid-cols-2 items-stretch">
+              {/* Image Column */}
+              <div
+                className={
+                  service.reversed ? "lg:order-2" : "lg:order-1"
+                }
+              >
+                <div className="aspect-[4/3] w-full overflow-hidden rounded-xl">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    unoptimized
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              </div>
+
+              {/* Text Column */}
+              <div
+                className={`flex flex-col justify-center py-10 px-8 sm:px-12 lg:py-0 lg:px-14 ${
+                  service.reversed ? "lg:order-1" : "lg:order-2"
+                }`}
+              >
+                <span className="text-6xl font-extrabold text-white/[0.04] leading-none mb-3 select-none">
+                  {service.num}
+                </span>
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-slate-400 leading-relaxed mb-6 text-sm sm:text-base">
+                  {service.description}
+                </p>
+                <ul className="space-y-2.5">
+                  {service.checks.map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-2.5 text-sm text-slate-300"
+                    >
+                      <Check className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </AnimatedSection>
+        ))}
+      </div>
+
+      {/* ── 3. Complete Service List ──────────────────────────────── */}
+      <div className="max-w-[1200px] mx-auto px-6 sm:px-8 pb-20">
+        <div className="section-divider mb-16" />
+
+        <AnimatedSection>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-12">
+            The Complete Service List
+          </h2>
+        </AnimatedSection>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          {serviceCards.map((service, index) => (
+            <AnimatedSection key={service.title} delay={index * 0.05}>
+              <div className="pro-card p-6 h-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                    {service.icon}
                   </div>
-                </div>
-
-                {/* Text */}
-                <div
-                  className={`p-8 sm:p-12 flex flex-col justify-center min-h-[400px] ${
-                    card.reversed ? "bg-[#0a0f1a]" : "bg-[#080e1a]"
-                  } ${card.reversed ? "lg:order-1" : "lg:order-2"}`}
-                >
-                  <span className="text-5xl font-bold text-white/5 mb-4">
-                    {card.num}
-                  </span>
-                  <h3 className="text-xl font-bold text-white mb-4">
-                    {card.title}
+                  <h3 className="text-sm font-semibold text-white">
+                    {service.title}
                   </h3>
-                  <p className="text-slate-400 leading-relaxed mb-6">
-                    {card.description}
-                  </p>
-                  <ul className="space-y-3">
-                    {card.checks.map((check, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 text-sm text-slate-300"
-                      >
-                        <Check className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
-                        <span>{check}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
+                <ul className="space-y-1.5">
+                  {service.bullets.map((bullet, i) => (
+                    <li
+                      key={i}
+                      className="text-xs text-slate-400 leading-relaxed"
+                    >
+                      &bull; {bullet}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </AnimatedSection>
           ))}
         </div>
+      </div>
 
-        {/* ── 3. ALL SERVICES GRID ───────────────────────────────── */}
-        <div className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="section-divider mb-16" />
-
-          <AnimatedSection>
-            <h2 className="text-2xl font-bold text-white text-center mb-12">
-              The Complete Service List
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            {allServices.map((service, index) => (
-              <AnimatedSection key={service.title} delay={index * 0.06}>
-                <div className="pro-card p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
-                      {service.icon}
-                    </div>
-                    <h3 className="text-sm font-semibold text-white">
-                      {service.title}
-                    </h3>
-                  </div>
-                  <ul className="space-y-1.5">
-                    {service.bullets.map((bullet, i) => (
-                      <li
-                        key={i}
-                        className="text-xs text-slate-400 leading-relaxed"
-                      >
-                        • {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-
-        {/* ── 4. BOTTOM CTA ──────────────────────────────────────── */}
-        <div className="py-20 text-center">
-          <AnimatedSection>
-            <p className="text-xl font-medium text-white mb-3">
-              Not sure what you need?
-            </p>
-          </AnimatedSection>
-          <AnimatedSection delay={0.1}>
-            <p className="text-slate-400 mb-8">
-              Let&apos;s figure it out together.
-            </p>
-          </AnimatedSection>
-          <AnimatedSection delay={0.2}>
-            <Button
-              onClick={() => navigate("contact")}
-              className="bg-white text-[#050a12] font-semibold px-8 py-3.5 rounded-lg hover:bg-slate-100"
-            >
-              Get in Touch
-            </Button>
-          </AnimatedSection>
-        </div>
+      {/* ── 4. Bottom CTA ─────────────────────────────────────────── */}
+      <div className="max-w-[1200px] mx-auto px-6 sm:px-8 pb-24 text-center">
+        <AnimatedSection>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Not sure what you need?
+          </h2>
+        </AnimatedSection>
+        <AnimatedSection delay={0.08}>
+          <p className="text-slate-400 mb-8 text-base sm:text-lg">
+            Let&apos;s figure it out together.
+          </p>
+        </AnimatedSection>
+        <AnimatedSection delay={0.16}>
+          <Button
+            onClick={() => navigate("contact")}
+            className="bg-white text-[#050a12] font-semibold px-8 py-3.5 rounded-lg hover:bg-slate-100 h-auto"
+          >
+            Get in Touch
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </AnimatedSection>
       </div>
     </section>
   );

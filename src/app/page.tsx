@@ -25,15 +25,15 @@ const ContactPage = lazy(() => import("@/components/pages/ContactPage"));
 /* ─── Page transition ─── */
 const pageVariants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
-  exit: { opacity: 0, transition: { duration: 0.2 } },
+  animate: { opacity: 1, transition: { duration: 0.3, ease: "easeOut" } },
+  exit: { opacity: 0, transition: { duration: 0.15 } },
 };
 
 /* ─── Page loading fallback ─── */
 function PageLoader() {
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="w-6 h-6 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
+      <div className="w-5 h-5 border-2 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
     </div>
   );
 }
@@ -74,37 +74,37 @@ function Navbar({
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#050a12]/90 backdrop-blur-md border-b border-white/[0.04]"
+          ? "bg-[#050a12]/85 backdrop-blur-xl border-b border-white/[0.04]"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
+      <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-[72px]">
           {/* Logo */}
           <button
             onClick={() => go("home")}
-            className="flex items-center gap-2.5"
+            className="flex items-center gap-2.5 group"
           >
-            <div className="w-7 h-7 rounded-md bg-emerald-500 flex items-center justify-center">
-              <Cpu className="w-3.5 h-3.5 text-white" />
+            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center transition-transform group-hover:scale-105">
+              <Cpu className="w-4 h-4 text-white" />
             </div>
-            <span className="text-base sm:text-lg font-semibold tracking-tight text-white">
+            <span className="text-[15px] font-semibold tracking-tight text-white">
               TechPartner
             </span>
           </button>
 
           {/* Desktop links */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((link) => (
               <button
                 key={link.page}
                 onClick={() => go(link.page)}
-                className={`px-3.5 py-2 text-[13px] transition-colors ${
+                className={`px-3.5 py-2 text-[13px] rounded-md transition-all duration-200 ${
                   currentPage === link.page
-                    ? "text-white font-medium"
-                    : "text-slate-500 hover:text-slate-300"
+                    ? "text-white font-medium bg-white/[0.04]"
+                    : "text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]"
                 }`}
               >
                 {link.label}
@@ -115,7 +115,7 @@ function Navbar({
           {/* Desktop CTA */}
           <div className="hidden lg:block">
             <button onClick={() => go("contact")}>
-              <span className="inline-flex items-center gap-2 text-[13px] font-medium text-white bg-white/10 hover:bg-white/15 px-4 py-2 rounded-lg transition-colors">
+              <span className="inline-flex items-center gap-2 text-[13px] font-medium text-[#050a12] bg-white hover:bg-slate-100 px-5 py-2 rounded-lg transition-colors">
                 Get Started
                 <ArrowRight className="w-3.5 h-3.5" />
               </span>
@@ -140,25 +140,25 @@ function Navbar({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#050a12]/98 backdrop-blur-md border-t border-white/[0.04]"
+            className="lg:hidden bg-[#050a12]/98 backdrop-blur-xl border-t border-white/[0.04]"
           >
-            <div className="px-5 py-5 space-y-0.5">
+            <div className="px-6 py-6 space-y-1">
               {navLinks.map((link) => (
                 <button
                   key={link.page}
                   onClick={() => go(link.page)}
                   className={`block w-full text-left px-3 py-2.5 text-sm rounded-lg transition-colors ${
                     currentPage === link.page
-                      ? "text-white font-medium"
+                      ? "text-white font-medium bg-white/[0.04]"
                       : "text-slate-500 hover:text-slate-300"
                   }`}
                 >
                   {link.label}
                 </button>
               ))}
-              <div className="pt-4 mt-2 border-t border-white/[0.04]">
+              <div className="pt-4 mt-3 border-t border-white/[0.04]">
                 <button onClick={() => go("contact")} className="w-full">
-                  <span className="inline-flex items-center justify-center gap-2 w-full text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-500 px-4 py-2.5 rounded-lg transition-colors">
+                  <span className="inline-flex items-center justify-center gap-2 w-full text-sm font-medium text-[#050a12] bg-white hover:bg-slate-100 px-4 py-2.5 rounded-lg transition-colors">
                     Get Started
                     <ArrowRight className="w-4 h-4" />
                   </span>
@@ -176,7 +176,7 @@ function Navbar({
 function Footer({ navigate }: { navigate: (page: string) => void }) {
   return (
     <footer className="border-t border-white/[0.04] bg-[#050a12]">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+      <div className="max-w-[1200px] mx-auto px-6 sm:px-8 py-16 sm:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
@@ -184,21 +184,22 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
               onClick={() => navigate("home")}
               className="flex items-center gap-2.5 mb-4"
             >
-              <div className="w-7 h-7 rounded-md bg-emerald-500 flex items-center justify-center">
-                <Cpu className="w-3.5 h-3.5 text-white" />
+              <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
+                <Cpu className="w-4 h-4 text-white" />
               </div>
-              <span className="text-base font-semibold tracking-tight text-white">
+              <span className="text-[15px] font-semibold tracking-tight text-white">
                 TechPartner
               </span>
             </button>
-            <p className="text-sm text-slate-600 leading-relaxed max-w-[240px]">
-              Your dedicated monthly tech partner for AI, apps, websites, and more — all for one flat fee.
+            <p className="text-sm text-slate-600 leading-relaxed max-w-[260px]">
+              Your dedicated monthly tech partner for AI, apps, websites, and
+              more — all for one flat fee.
             </p>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-xs font-medium text-slate-400 uppercase tracking-[0.15em] mb-5">
+            <h4 className="text-[11px] font-medium text-slate-400 uppercase tracking-[0.15em] mb-5">
               Services
             </h4>
             <ul className="space-y-3">
@@ -223,7 +224,7 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
 
           {/* Company */}
           <div>
-            <h4 className="text-xs font-medium text-slate-400 uppercase tracking-[0.15em] mb-5">
+            <h4 className="text-[11px] font-medium text-slate-400 uppercase tracking-[0.15em] mb-5">
               Company
             </h4>
             <ul className="space-y-3">
@@ -247,7 +248,7 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
 
           {/* Quick Stats */}
           <div>
-            <h4 className="text-xs font-medium text-slate-400 uppercase tracking-[0.15em] mb-5">
+            <h4 className="text-[11px] font-medium text-slate-400 uppercase tracking-[0.15em] mb-5">
               Why TechPartner
             </h4>
             <ul className="space-y-3">
@@ -258,7 +259,7 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
                 { icon: Wrench, text: "30+ services" },
               ].map((item) => (
                 <li key={item.text} className="flex items-center gap-2.5">
-                  <item.icon className="w-3.5 h-3.5 text-emerald-500/70 shrink-0" />
+                  <item.icon className="w-3.5 h-3.5 text-emerald-500/60 shrink-0" />
                   <span className="text-sm text-slate-600">{item.text}</span>
                 </li>
               ))}

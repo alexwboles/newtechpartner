@@ -24,9 +24,9 @@ function AnimatedSection({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.6, delay }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      transition={{ duration: 0.5, delay }}
       className={className}
     >
       {children}
@@ -45,6 +45,9 @@ export default function HomePage({
     <div>
       {/* ──────────────── 1. HERO ──────────────── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Animated gradient fallback (visible behind / if image fails) */}
+        <div className="absolute inset-0 hero-video-bg" />
+
         {/* Ken Burns background image */}
         <div className="absolute inset-0">
           <Image
@@ -62,21 +65,21 @@ export default function HomePage({
         <div className="absolute inset-0 hero-overlay-side" />
 
         {/* Content */}
-        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 sm:px-8 text-center">
           <motion.p
             className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-medium mb-6"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             Business Technology Partner
           </motion.p>
 
           <motion.h1
             className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
           >
             Technology That Powers
             <br />
@@ -85,9 +88,9 @@ export default function HomePage({
 
           <motion.p
             className="text-lg text-slate-400 max-w-xl mx-auto mb-10 leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
           >
             AI automation, custom software, and ongoing tech support for a flat
             monthly fee. Everything included. No surprises.
@@ -95,9 +98,9 @@ export default function HomePage({
 
           <motion.div
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.65 }}
+            transition={{ duration: 0.5, delay: 0.65 }}
           >
             <Button
               onClick={() => navigate("contact")}
@@ -119,7 +122,7 @@ export default function HomePage({
             className="text-sm text-slate-500"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
           >
             Starting at $200/month
           </motion.p>
@@ -129,7 +132,7 @@ export default function HomePage({
       {/* ──────────────── 2. LOGO STRIP ──────────────── */}
       <section className="py-16">
         <div className="section-divider" />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-16">
+        <div className="max-w-[1200px] mx-auto px-6 sm:px-8 mt-16">
           <AnimatedSection>
             <p className="text-xs uppercase tracking-[0.2em] text-slate-600 text-center">
               Trusted by businesses across every industry
@@ -159,7 +162,7 @@ export default function HomePage({
 
       {/* ──────────────── 3. VALUE PROPOSITION ──────────────── */}
       <section className="py-24">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               Everything Your Business Needs
@@ -199,7 +202,7 @@ export default function HomePage({
                 </div>
               </AnimatedSection>
 
-              <div className="my-6 border-t border-white/6" />
+              <div className="my-6 section-divider" />
 
               <AnimatedSection delay={0.2}>
                 <div>
@@ -217,9 +220,9 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* ──────────────── 4. IMAGE + TEXT SECTION ──────────────── */}
+      {/* ──────────────── 4. RESULT SECTION ──────────────── */}
       <section className="py-24 bg-[#080e1a]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left: Text */}
             <AnimatedSection>
@@ -283,7 +286,7 @@ export default function HomePage({
       {/* ──────────────── 5. TESTIMONIALS ──────────────── */}
       <section className="py-24">
         <div className="section-divider" />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-24">
+        <div className="max-w-[1200px] mx-auto px-6 sm:px-8 mt-24">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               What Our Clients Say
@@ -356,21 +359,21 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* ──────────────── 6. CTA SECTION ──────────────── */}
+      {/* ──────────────── 6. FINAL CTA ──────────────── */}
       <section className="py-32 relative overflow-hidden">
-        {/* Background image */}
+        {/* Background image at 15% opacity */}
         <Image
           src="/img/tech-abstract.jpg"
           alt=""
           fill
           unoptimized
-          className="object-cover w-full h-full opacity-20"
+          className="object-cover w-full h-full opacity-[0.15]"
         />
-        {/* Overlay */}
+        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#050a12] via-[#050a12]/80 to-[#050a12]/60" />
 
         {/* Content */}
-        <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 text-center">
+        <div className="relative z-10 max-w-2xl mx-auto px-6 sm:px-8 text-center">
           <AnimatedSection>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
               Ready to Transform Your Business?

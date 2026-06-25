@@ -27,9 +27,9 @@ function AnimatedSection({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
       className={className}
     >
       {children}
@@ -89,29 +89,31 @@ export default function FAQPage({
   return (
     <div className="min-h-screen">
       {/* ----- 1. Header ----- */}
-      <section className="pt-32 pb-16 px-4 text-center">
-        <AnimatedSection>
-          <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 mb-6">
-            FAQ
-          </p>
-        </AnimatedSection>
+      <section className="pt-32 pb-16 text-center">
+        <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
+          <AnimatedSection>
+            <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-medium mb-6">
+              FAQ
+            </p>
+          </AnimatedSection>
 
-        <AnimatedSection delay={0.1}>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-            Frequently Asked Questions
-          </h1>
-        </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+              Frequently Asked Questions
+            </h1>
+          </AnimatedSection>
 
-        <AnimatedSection delay={0.2}>
-          <p className="mt-5 text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Everything you need to know about TechPartner. Can&apos;t find what
-            you&apos;re looking for? Reach out directly.
-          </p>
-        </AnimatedSection>
+          <AnimatedSection delay={0.2}>
+            <p className="mt-5 text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              Everything you need to know about TechPartner. Can&apos;t find
+              what you&apos;re looking for? Reach out directly.
+            </p>
+          </AnimatedSection>
+        </div>
       </section>
 
       {/* ----- 2. FAQ Accordion ----- */}
-      <section className="px-4 max-w-3xl mx-auto">
+      <section className="max-w-[720px] mx-auto px-6 sm:px-8">
         <AnimatedSection delay={0.1}>
           <Accordion type="single" collapsible>
             {faqItems.map((item, index) => (
@@ -120,7 +122,7 @@ export default function FAQPage({
                 value={`faq-${index}`}
                 className="border-b border-white/[0.06]"
               >
-                <AccordionTrigger className="px-0 py-5 text-left text-white font-medium hover:no-underline hover:text-white [&[data-state=open]>svg]:text-emerald-400">
+                <AccordionTrigger className="px-0 py-5 text-left text-[15px] text-white font-medium hover:no-underline hover:text-white [&[data-state=open]>svg]:text-emerald-400">
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent className="pb-5 text-sm text-slate-400 leading-relaxed">
@@ -133,21 +135,23 @@ export default function FAQPage({
       </section>
 
       {/* ----- 3. CTA ----- */}
-      <section className="py-16 px-4 text-center">
-        <AnimatedSection>
-          <h3 className="text-2xl font-medium text-white mb-2">
-            Still have questions?
-          </h3>
-          <p className="text-sm text-slate-400 mb-6">
-            We&apos;re happy to help. No commitment, no pressure.
-          </p>
-          <button
-            onClick={() => navigate("contact")}
-            className="border border-white/20 text-white rounded-lg hover:bg-white/5 px-8 py-2.5 text-sm font-medium transition-colors"
-          >
-            Contact Us
-          </button>
-        </AnimatedSection>
+      <section className="py-20 text-center">
+        <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
+          <AnimatedSection>
+            <h3 className="text-2xl font-medium text-white mb-2">
+              Still have questions?
+            </h3>
+            <p className="text-sm text-slate-400 mb-8">
+              We&apos;re happy to help. No commitment, no pressure.
+            </p>
+            <button
+              onClick={() => navigate("contact")}
+              className="bg-white text-[#050a12] font-semibold rounded-lg hover:bg-slate-100 px-8 py-2.5 text-sm transition-colors"
+            >
+              Contact Us
+            </button>
+          </AnimatedSection>
+        </div>
       </section>
     </div>
   );
