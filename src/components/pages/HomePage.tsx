@@ -4,7 +4,6 @@ import { useRef, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 /* ────────────────────────────── Helper Component ────────────────────────────── */
@@ -283,83 +282,7 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* ──────────────── 5. TESTIMONIALS ──────────────── */}
-      <section className="py-24">
-        <div className="section-divider" />
-        <div className="max-w-[1200px] mx-auto px-6 sm:px-8 mt-24">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              What Our Clients Say
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                quote:
-                  "TechPartner completely transformed how we handle bookings. Our AI chatbot handles 80% of customer questions now, and our custom app cut admin time in half.",
-                name: "Sarah M.",
-                role: "Owner, Bloom Wellness Studio",
-                image: "/img/person-1.jpg",
-                metric: "50% less admin time",
-              },
-              {
-                quote:
-                  "I was paying $4,000/month for a freelance developer who took weeks. TechPartner delivers in days and covers everything — website, payments, automation.",
-                name: "James R.",
-                role: "Founder, JR Properties",
-                image: "/img/person-2.jpg",
-                metric: "$3,800/mo saved",
-              },
-              {
-                quote:
-                  "The monthly recap emails are game-changers. I always know what was done, what's next, and I can request anything new. Feels like having a CTO on retainer.",
-                name: "Maria L.",
-                role: "COO, FreshBite Catering",
-                image: "/img/person-3.jpg",
-                metric: "30+ requests fulfilled",
-              },
-            ].map((t, i) => (
-              <AnimatedSection key={t.name} delay={i * 0.1}>
-                <div className="pro-card p-8 flex flex-col h-full">
-                  <p className="text-4xl text-emerald-500/30 font-serif mb-4">
-                    &ldquo;
-                  </p>
-                  <p className="text-sm text-slate-300 leading-relaxed flex-1 mb-6">
-                    {t.quote}
-                  </p>
-                  <div className="flex items-center gap-3 border-t border-white/6 pt-6">
-                    <Image
-                      src={t.image}
-                      alt={t.name}
-                      width={40}
-                      height={40}
-                      unoptimized
-                      className="w-10 h-10 rounded-full object-cover shrink-0"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-white">
-                        {t.name}
-                      </p>
-                      <p className="text-xs text-slate-500 truncate">
-                        {t.role}
-                      </p>
-                    </div>
-                    <Badge
-                      variant="outline"
-                      className="border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs shrink-0"
-                    >
-                      {t.metric}
-                    </Badge>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ──────────────── 6. FINAL CTA ──────────────── */}
+      {/* ──────────────── 5. FINAL CTA ──────────────── */}
       <section className="py-32 relative overflow-hidden">
         {/* Background image at 15% opacity */}
         <Image
