@@ -2,7 +2,6 @@
 
 import { useRef, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
-import Image from "next/image";
 
 /* ------------------------------------------------------------------ */
 /*  AnimatedSection — subtle fade-up on scroll                        */
@@ -141,12 +140,11 @@ export default function HowItWorksPage({
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
           <AnimatedSection>
             <div className="relative rounded-sm overflow-hidden aspect-[16/9]">
-              <Image
+              <img
                 src="/img/hands-typing.jpg"
                 alt="Professional working on a laptop"
-                fill
-                className="object-cover w-full h-full"
-                unoptimized
+                className="absolute inset-0 object-cover w-full h-full"
+                loading="lazy"
               />
             </div>
             <p className="text-sm text-slate-500 text-center mt-4">

@@ -4,7 +4,6 @@ import { useRef, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 import { Check, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 
 /* ------------------------------------------------------------------ */
 /*  AnimatedSection — subtle fade-up on scroll                        */
@@ -96,12 +95,11 @@ export default function PricingPage({
             {/* Left: Image */}
             <AnimatedSection className="lg:col-span-2" delay={0.05}>
               <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full w-full overflow-hidden rounded-sm">
-                <Image
+                <img
                   src="/img/pricing-value.jpg"
                   alt="Business consultation"
-                  fill
-                  unoptimized
-                  className="object-cover w-full h-full"
+                  className="absolute inset-0 object-cover w-full h-full"
+                  loading="lazy"
                 />
               </div>
             </AnimatedSection>

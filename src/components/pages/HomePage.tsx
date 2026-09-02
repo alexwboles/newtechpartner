@@ -4,7 +4,6 @@ import { useRef, useState, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 /* ────────────────────────────── Helper Component ────────────────────────────── */
 
@@ -52,13 +51,11 @@ export default function HomePage({
             videoReady ? "opacity-0" : "opacity-100"
           }`}
         >
-          <Image
+          <img
             src="/img/hero-office.jpg"
             alt=""
-            fill
-            unoptimized
             className="kenburns object-cover w-full h-full"
-            priority
+            loading="eager"
           />
         </div>
 
@@ -192,13 +189,11 @@ export default function HomePage({
             {/* Left: Image */}
             <AnimatedSection>
               <div className="rounded-sm overflow-hidden aspect-[4/3]">
-                <Image
+                <img
                   src="/img/team-collab.jpg"
                   alt="Team collaborating on a project"
-                  width={1344}
-                  height={768}
-                  unoptimized
                   className="object-cover w-full h-full"
+                  loading="lazy"
                 />
               </div>
             </AnimatedSection>
@@ -285,13 +280,11 @@ export default function HomePage({
             {/* Right: Image — 4:3 aspect, NOT square */}
             <AnimatedSection delay={0.15}>
               <div className="rounded-sm overflow-hidden aspect-[4/3]">
-                <Image
+                <img
                   src="/img/ai-chatbot.jpg"
                   alt="AI chatbot interface on a phone"
-                  width={1344}
-                  height={768}
-                  unoptimized
                   className="object-cover w-full h-full"
+                  loading="lazy"
                 />
               </div>
             </AnimatedSection>
@@ -302,12 +295,11 @@ export default function HomePage({
       {/* ──────────────── 5. FINAL CTA ──────────────── */}
       <section className="py-32 relative overflow-hidden">
         {/* Background image at 12% opacity */}
-        <Image
+        <img
           src="/img/tech-abstract.jpg"
           alt=""
-          fill
-          unoptimized
-          className="object-cover w-full h-full opacity-[0.12]"
+          className="absolute inset-0 object-cover w-full h-full opacity-[0.12]"
+          loading="lazy"
         />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#050a12] via-[#050a12]/80 to-[#050a12]/60" />

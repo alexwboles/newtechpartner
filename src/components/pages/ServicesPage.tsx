@@ -15,7 +15,6 @@ import {
   Check,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 /* ─── AnimatedSection: subtle fade-up on scroll ───────────────────── */
 function AnimatedSection({
@@ -206,12 +205,11 @@ export default function ServicesPage({
       {/* ── 1. Page Hero ───────────────────────────────────────────── */}
       <div className="relative overflow-hidden pt-36 pb-20">
         {/* Background image at low opacity */}
-        <Image
+        <img
           src="/img/services-hero.jpg"
           alt=""
-          fill
-          unoptimized
-          className="object-cover w-full h-full opacity-[0.12]"
+          className="absolute inset-0 object-cover w-full h-full opacity-[0.12]"
+          loading="lazy"
         />
 
         {/* Centered content */}
@@ -251,12 +249,11 @@ export default function ServicesPage({
                 }
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm">
-                  <Image
+                  <img
                     src={service.image}
                     alt={service.title}
-                    fill
-                    unoptimized
-                    className="object-cover w-full h-full"
+                    className="absolute inset-0 object-cover w-full h-full"
+                    loading="lazy"
                   />
                 </div>
               </div>
