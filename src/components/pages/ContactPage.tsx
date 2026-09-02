@@ -91,6 +91,7 @@ export default function ContactPage({
 }: {
   navigate: (page: string) => void;
 }) {
+  const contactWebhookUrl = process.env.NEXT_PUBLIC_CONTACT_WEBHOOK_URL?.trim();
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [formData, setFormData] = useState({
@@ -113,15 +114,39 @@ export default function ContactPage({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
+
+    const subject = `New TechPartner Inquiry from ${formData.name}${formData.business ? ` (${formData.business})` : ""}`;
+    const messageBody = [
+      `Name: ${formData.name}`,
+      formData.business ? `Business: ${formData.business}` : null,
+      `Email: ${formData.email}`,
+      "",
+      "Message:",
+      formData.message || "(no message)",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (res.ok) setSubmitted(true);
-    } catch {
+      if (contactWebhookUrl) {
+        const res = await fetch(contactWebhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...formData, subject }),
+        });
+
+        if (!res.ok) {
+          throw new Error("Contact webhook request failed");
+        }
+      } else {
+        // Fallback for static hosting: opens user email client with prefilled data.
+        const mailto = `mailto:alexwboles@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageBody)}`;
+        window.location.href = mailto;
+      }
+
       setSubmitted(true);
+    } catch {
+      setSubmitted(false);
     } finally {
       setSending(false);
     }
