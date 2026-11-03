@@ -1,0 +1,69 @@
+{
+  "csv-airtable-sync": {
+    "revision": "d3f54ad2d83ebb1adb5188ea828b59aad2024ae0",
+    "sample": {
+      "valid": 2,
+      "rejected": 2,
+      "committed": false
+    }
+  },
+  "gmail-faq-responder": {
+    "revision": "1f81a65a62e75f29193ee3182e052a0204403e69",
+    "sample": [
+      {
+        "message_id": "msg-001",
+        "action": "reply",
+        "confidence": 0.7725,
+        "faq_id": "class_schedule",
+        "reply": "Our current class schedule is available at https://example.com/schedule. Reply with your preferred day if you would like help choosing a class.",
+        "reason": null
+      },
+      {
+        "message_id": "msg-002",
+        "action": "manual_review",
+        "confidence": 0.1618,
+        "faq_id": null,
+        "reply": null,
+        "reason": "low_confidence"
+      },
+      {
+        "message_id": "msg-001",
+        "action": "skip",
+        "confidence": 1.0,
+        "faq_id": null,
+        "reply": null,
+        "reason": "duplicate_message_id"
+      }
+    ]
+  },
+  "product-clarity-coach-prototype": {
+    "revision": "6631f41dc37f888cb2750106c46e200cfad309a8",
+    "sample": {
+      "next_question": "The primary customer is too broad. Choose one specific early-adopter segment for version 1.",
+      "readiness": {
+        "score": 12,
+        "status": "Not yet clear enough to advance",
+        "open_issues": [
+          "The primary customer is too broad. Choose one specific early-adopter segment for version 1.",
+          "problem",
+          "solution",
+          "value_proposition",
+          "potential_advantage",
+          "must_have",
+          "nice_to_have",
+          "later"
+        ]
+      }
+    }
+  },
+  "crystade-uptime-monitor": {
+    "revision": "0ccd4887f80dd8f0c225b0715e0d84ee2ba8aab1",
+    "sample": {
+      "http_status": 503,
+      "status": "critical",
+      "database": {
+        "ok": false
+      }
+    }
+  }
+}

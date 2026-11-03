@@ -94,6 +94,66 @@
 .portfolio-detail ul { padding-left: 19px; list-style: disc; font-size: 13px; color: #bdc9d7; line-height: 2; }
 .portfolio-detail-note { font-size: 12px; color: #9db0c2; line-height: 1.8; padding: 15px; background: #ffffff04; border-radius: 7px; }
 .portfolio-detail-actions { padding-top: 5px; }
+
+/* Actual product imagery and readable input-to-result explanations. */
+.portfolio-project-heading { padding: 23px 25px 20px; }
+.portfolio-project-heading .portfolio-project-meta { margin-bottom: 11px; }
+.portfolio-project-heading h3 { font-size: 23px; color: #f1f5f9; }
+.portfolio-project-heading > p { color: #aebfcf; font-size: 13px; margin-top: 7px; }
+.portfolio-product-preview { margin: 0; min-width: 0; }
+.portfolio-screenshot-frame { aspect-ratio: 1.85; overflow: hidden; background: #0a111b; border-block: 1px solid #ffffff0d; }
+.portfolio-screenshot-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.portfolio-product-preview figcaption { color: #a1b3c5; font-size: 10px; line-height: 1.6; padding: 10px 25px; background: #070d1599; border-bottom: 1px solid #ffffff09; }
+.portfolio-sample-output { min-height: 238px; padding: 23px 25px; background: #0a1420; border-block: 1px solid #ffffff0d; }
+.portfolio-output-label { color: #a7c7c1; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .13em; }
+.portfolio-sample-output dl { margin-top: 16px; }
+.portfolio-sample-output dl > div { padding: 10px 0; border-bottom: 1px solid #ffffff0a; display: flex; justify-content: space-between; align-items: start; gap: 22px; }
+.portfolio-sample-output dl > div:last-child { border-bottom: 0; }
+.portfolio-sample-output dt { color: #91a7ba; font-size: 11px; line-height: 1.7; flex: 0 0 42%; }
+.portfolio-sample-output dd { color: #e1eee9; text-align: right; font-size: 13px; font-weight: 550; line-height: 1.65; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.portfolio-project-body .portfolio-for { color: #b9c8d7; font-size: 11px; line-height: 1.7; margin: 0 0 19px; }
+.portfolio-for > span { text-transform: uppercase; font-size: 9px; color: #8da2b8; letter-spacing: .1em; display: block; margin-bottom: 3px; }
+.portfolio-input-result { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 22px; }
+.portfolio-input-result dt { color: #e4c68e; font-size: 11px; font-weight: 600; margin-bottom: 7px; }
+.portfolio-input-result dd { font-size: 13px; line-height: 1.8; color: #b5c4d3; }
+.portfolio-project-actions .portfolio-walkthrough-button { background: #ddbc7b; color: #101824; padding: 10px 13px; border-radius: 7px; font-weight: 650; min-height: 42px; }
+.portfolio-project-actions .portfolio-walkthrough-button:hover { background: #efd49e; }
+.portfolio-project-actions .portfolio-demo-button { font-size: 12px; min-height: 42px; }
+.portfolio-tour { max-width: 1000px !important; padding: 32px !important; }
+.portfolio-tour-topbar { position: sticky; top: -32px; z-index: 2; background: #101925; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: -32px -32px 0; padding: 12px 24px; border-bottom: 1px solid #ffffff12; border-radius: 14px 14px 0 0; }
+.portfolio-tour-topbar > span { font-size: 10px; color: #93a8bc; text-transform: uppercase; letter-spacing: .12em; }
+.portfolio-tour-topbar > button { display: flex; align-items: center; gap: 7px; min-height: 44px; color: #c5d4e3; font-size: 12px; padding: 5px 10px; border-radius: 6px; background: #ffffff06; }
+.portfolio-tour-layout { display: grid; grid-template-columns: 1.2fr 1fr; align-items: start; gap: 28px; }
+.portfolio-tour-layout > * { min-width: 0; }
+.portfolio-product-preview-expanded { border: 1px solid #ffffff12; border-radius: 9px; overflow: hidden; }
+.portfolio-product-preview-expanded .portfolio-screenshot-frame { aspect-ratio: 1.35; }
+.portfolio-product-preview-expanded figcaption { padding: 10px 14px; }
+.portfolio-product-preview-expanded .portfolio-sample-output { padding: 20px; }
+.portfolio-product-preview-expanded .portfolio-sample-output dd { display: block; }
+.portfolio-image-link { display: inline-flex; gap: 7px; align-items: center; padding: 12px 0; min-height: 42px; color: #b2c7d8; font-size: 11px; }
+.portfolio-tour .portfolio-detail-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; margin: 3px 0 19px; }
+.portfolio-tour-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 23px; }
+.portfolio-tour-steps > li { display: flex; align-items: start; gap: 13px; }
+.portfolio-tour-steps > li > span { flex-shrink: 0; font-size: 11px; color: #e5c68d; background: #d9b76e13; border-radius: 50%; width: 29px; height: 29px; display: grid; place-items: center; }
+.portfolio-tour-steps h4 { font-size: 14px; color: #e8eff5; font-weight: 600; line-height: 1.5; margin: 2px 0 7px; }
+.portfolio-tour-steps p { color: #aabbcc; font-size: 12px; line-height: 1.85; }
+.portfolio-example-result { border-top: 1px solid #ffffff12; padding-top: 23px; }
+.portfolio-example-result .portfolio-eyebrow { font-size: 9px; margin-bottom: 11px; }
+.portfolio-example-result h3 { color: #e7eff4; font-size: 18px; line-height: 1.5; font-weight: 550; margin-bottom: 10px; }
+.portfolio-example-result p { color: #aebfcf; font-size: 13px; line-height: 1.85; }
+.portfolio-example-result a { display: inline-flex; align-items: center; gap: 7px; color: #e4c68c; font-size: 12px; padding-top: 14px; min-height: 42px; }
+@media (max-width: 760px) {
+  .portfolio-tour-layout { grid-template-columns: minmax(0,1fr); gap: 23px; }
+  .portfolio-tour { padding: 24px 20px !important; }
+  .portfolio-tour-topbar { top: -24px; margin: -24px -20px 0; padding: 10px 16px; }
+  .portfolio-project-heading { padding: 22px; }
+  .portfolio-project-heading h3 { font-size: 22px; }
+  .portfolio-input-result { gap: 16px; }
+  .portfolio-input-result dd { font-size: 12px; }
+  .portfolio-product-preview figcaption { padding-left: 22px; padding-right: 22px; }
+  .portfolio-project-actions { gap: 10px; }
+  .portfolio-sample-output { padding: 20px 22px; min-height: 225px; }
+}
 .portfolio-inquiry-form { display: flex; flex-direction: column; gap: 10px; }
 .portfolio-inquiry-form > label, .portfolio-inquiry-draft > label { color: #b9c8d5; font-size: 12px; }
 .portfolio-inquiry-form > input, .portfolio-inquiry-form > textarea, .portfolio-inquiry-draft > textarea { background: #080f19; border: 1px solid #ffffff18; border-radius: 7px; padding: 10px 12px; color: #e3edf5; font-size: 14px; width: 100%; outline-color: #d9b76e; }
