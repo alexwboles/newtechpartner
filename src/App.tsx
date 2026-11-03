@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, lazy, Suspense } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import {
   Menu,
   XIcon,
@@ -20,9 +20,14 @@ const PricingPage = lazy(() => import("@/components/pages/PricingPage"));
 const HowItWorksPage = lazy(() => import("@/components/pages/HowItWorksPage"));
 const FAQPage = lazy(() => import("@/components/pages/FAQPage"));
 const ContactPage = lazy(() => import("@/components/pages/ContactPage"));
+const ProductsPage = lazy(() => import("@/components/pages/ProductsPage"));
+const LeadRescueLitePage = lazy(() => import("@/components/pages/tools/LeadRescueLitePage"));
+const FieldQuoteMiniPage = lazy(() => import("@/components/pages/tools/FieldQuoteMiniPage"));
+const SchemaCheckerPage = lazy(() => import("@/components/pages/tools/SchemaCheckerPage"));
+const LeadRevenueCalculatorPage = lazy(() => import("@/components/pages/tools/LeadRevenueCalculatorPage"));
 
 /* ─── Page transition ─── */
-const pageVariants = {
+const pageVariants: Variants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.3, ease: "easeOut" } },
   exit: { opacity: 0, transition: { duration: 0.15 } },
@@ -41,10 +46,19 @@ function PageLoader() {
 const navLinks = [
   { label: "Home", page: "home" },
   { label: "Services", page: "services" },
+  { label: "Products & Tools", page: "products" },
   { label: "Pricing", page: "pricing" },
   { label: "How It Works", page: "how-it-works" },
   { label: "FAQ", page: "faq" },
   { label: "Contact", page: "contact" },
+];
+
+const knownPages = [
+  ...navLinks.map((l) => l.page),
+  "tool-lead-rescue",
+  "tool-field-quote",
+  "tool-schema-checker",
+  "tool-lead-calculator",
 ];
 
 function Navbar({
@@ -84,6 +98,7 @@ function Navbar({
           {/* Logo */}
           <button
             onClick={() => go("home")}
+            aria-label="TechPartner — home"
             className="flex items-center gap-2.5 group"
           >
             <img
@@ -183,6 +198,7 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
           <div className="sm:col-span-2 lg:col-span-1">
             <button
               onClick={() => navigate("home")}
+              aria-label="TechPartner — home"
               className="flex items-center gap-2.5 mb-4"
             >
               <img
@@ -293,6 +309,11 @@ function PageRenderer({ page, navigate }: { page: string; navigate: (page: strin
     "how-it-works": <HowItWorksPage navigate={navigate} />,
     faq: <FAQPage navigate={navigate} />,
     contact: <ContactPage navigate={navigate} />,
+    products: <ProductsPage navigate={navigate} />,
+    "tool-lead-rescue": <LeadRescueLitePage navigate={navigate} />,
+    "tool-field-quote": <FieldQuoteMiniPage navigate={navigate} />,
+    "tool-schema-checker": <SchemaCheckerPage navigate={navigate} />,
+    "tool-lead-calculator": <LeadRevenueCalculatorPage navigate={navigate} />,
   };
 
   return (
@@ -308,18 +329,18 @@ export default function TechPartnerApp() {
 
   const navigate = useCallback((page: string) => {
     setCurrentPage(page);
-    if (page === "home") {
-      window.history.replaceState(null, "", "/");
-    } else {
-      window.history.replaceState(null, "", `#/${page}`);
-    }
+    // Set the hash (not replaceState) so the URL matches the page, browser
+    // back/forward work, and a reload lands on the same page. The existing
+    // hashchange listener re-syncs state, so this is safe on preview and
+    // production routing alike.
+    window.location.hash = page === "home" ? "#/" : `#/${page}`;
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace("#/", "");
-      if (hash && navLinks.some((l) => l.page === hash)) {
+      if (hash && knownPages.includes(hash)) {
         setCurrentPage(hash);
       } else {
         setCurrentPage("home");

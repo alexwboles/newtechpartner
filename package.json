@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 3000",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:contact": "tsc src/lib/contact-delivery.ts --target ES2022 --module commonjs --lib ES2022,DOM --skipLibCheck --outDir output/contact-tests && node test/contact-delivery.cjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

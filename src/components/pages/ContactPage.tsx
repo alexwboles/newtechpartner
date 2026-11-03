@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, type ReactNode, useEffect } from "react";
+import { useState, useRef, type ReactNode } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   Mail,
@@ -11,6 +11,13 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  CONTACT_EMAIL,
+  deliverContactInquiry,
+  prepareContactEmail,
+  type ContactDelivery,
+  type ContactInquiry,
+} from "@/lib/contact-delivery";
 
 /* ------------------------------------------------------------------ */
 /*  AnimatedSection — subtle fade-up on scroll                        */
@@ -91,8 +98,11 @@ export default function ContactPage({
 }: {
   navigate: (page: string) => void;
 }) {
-  const contactWebhookUrl = process.env.NEXT_PUBLIC_CONTACT_WEBHOOK_URL?.trim();
-  const [submitted, setSubmitted] = useState(false);
+  const contactWebhookUrl = import.meta.env.VITE_CONTACT_WEBHOOK_URL?.trim();
+  const [delivery, setDelivery] = useState<ContactDelivery | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "manual">("idle");
+  const inFlight = useRef(false);
   const [sending, setSending] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -101,54 +111,38 @@ export default function ContactPage({
     message: "",
   });
 
-  useEffect(() => {
-    if (submitted) {
-      const timer = setTimeout(() => {
-        setSubmitted(false);
-        setFormData({ name: "", business: "", email: "", message: "" });
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [submitted]);
+  const updateField = (field: keyof ContactInquiry, value: string) => {
+    setFormData((previous) => ({ ...previous, [field]: value }));
+    setDelivery(null);
+    setError(null);
+    setCopyStatus("idle");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (inFlight.current) return;
+    inFlight.current = true;
     setSending(true);
-
-    const subject = `New TechPartner Inquiry from ${formData.name}${formData.business ? ` (${formData.business})` : ""}`;
-    const messageBody = [
-      `Name: ${formData.name}`,
-      formData.business ? `Business: ${formData.business}` : null,
-      `Email: ${formData.email}`,
-      "",
-      "Message:",
-      formData.message || "(no message)",
-    ]
-      .filter(Boolean)
-      .join("\n");
-
+    setError(null);
+    setDelivery(null);
+    setCopyStatus("idle");
     try {
-      if (contactWebhookUrl) {
-        const res = await fetch(contactWebhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...formData, subject }),
-        });
-
-        if (!res.ok) {
-          throw new Error("Contact webhook request failed");
-        }
-      } else {
-        // Fallback for static hosting: opens user email client with prefilled data.
-        const mailto = `mailto:alexwboles@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageBody)}`;
-        window.location.href = mailto;
-      }
-
-      setSubmitted(true);
-    } catch {
-      setSubmitted(false);
+      setDelivery(await deliverContactInquiry({ ...formData }, { webhookUrl: contactWebhookUrl }));
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : "Your inquiry could not be submitted. Your message is still here.");
     } finally {
+      inFlight.current = false;
       setSending(false);
+    }
+  };
+
+  const copyDraft = async () => {
+    if (delivery?.mode !== "email") return;
+    try {
+      await navigator.clipboard.writeText(`To: ${CONTACT_EMAIL}\nSubject: ${delivery.subject}\n\n${delivery.body}`);
+      setCopyStatus("copied");
+    } catch {
+      setCopyStatus("manual");
     }
   };
 
@@ -252,10 +246,12 @@ export default function ContactPage({
                       </span>
                       <div>
                         <p className="text-sm text-white/80 font-medium">
-                          {step.title}
+                            {!contactWebhookUrl && step.num === "1" ? "Send your email" : step.title}
                         </p>
                         <p className="text-xs text-slate-500 mt-0.5">
-                          {step.description}
+                            {!contactWebhookUrl && step.num === "1"
+                              ? "Prepare your message below, then send it in your email app."
+                              : step.description}
                         </p>
                       </div>
                     </div>
@@ -269,7 +265,7 @@ export default function ContactPage({
               <AnimatedSection>
                 <div className="border-t border-white/[0.06] pt-10">
                   <AnimatePresence mode="wait">
-                    {submitted ? (
+                    {delivery?.mode === "submitted" ? (
                       <motion.div
                         key="success"
                         initial={{ opacity: 0, y: 8 }}
@@ -282,12 +278,22 @@ export default function ContactPage({
                           <Check className="h-5 w-5 text-emerald-400" />
                         </div>
                         <h3 className="text-lg font-medium text-white mb-1.5">
-                          Message received
+                          Inquiry submitted
                         </h3>
                         <p className="text-sm text-slate-400 max-w-xs">
-                          We&apos;ll review your inquiry and respond within 48
-                          hours.
+                          The contact service confirmed acceptance. We&apos;ll
+                          review your inquiry and respond within 48 hours.
                         </p>
+                        <details className="mt-5 w-full text-left">
+                          <summary className="cursor-pointer text-sm text-white/80">Your submitted details</summary>
+                          <pre className="mt-3 whitespace-pre-wrap break-words text-xs text-slate-300">{prepareContactEmail(formData).body}</pre>
+                        </details>
+                        <button type="button" className="mt-6 text-sm text-emerald-300 underline" onClick={() => {
+                          setDelivery(null);
+                          setError(null);
+                          setCopyStatus("idle");
+                          setFormData({ name: "", business: "", email: "", message: "" });
+                        }}>Start another inquiry</button>
                       </motion.div>
                     ) : (
                       <motion.form
@@ -312,13 +318,10 @@ export default function ContactPage({
                               id="contact-name"
                               placeholder="John Smith"
                               required
+                              maxLength={120}
+                              disabled={sending}
                               value={formData.name}
-                              onChange={(e) =>
-                                setFormData((prev) => ({
-                                  ...prev,
-                                  name: e.target.value,
-                                }))
-                              }
+                              onChange={(e) => updateField("name", e.target.value)}
                               className={inputBase}
                             />
                           </div>
@@ -332,13 +335,10 @@ export default function ContactPage({
                             <Input
                               id="contact-business"
                               placeholder="Acme Inc."
+                              maxLength={160}
+                              disabled={sending}
                               value={formData.business}
-                              onChange={(e) =>
-                                setFormData((prev) => ({
-                                  ...prev,
-                                  business: e.target.value,
-                                }))
-                              }
+                              onChange={(e) => updateField("business", e.target.value)}
                               className={inputBase}
                             />
                           </div>
@@ -357,13 +357,10 @@ export default function ContactPage({
                             type="email"
                             placeholder="john@example.com"
                             required
+                            maxLength={254}
+                            disabled={sending}
                             value={formData.email}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                email: e.target.value,
-                              }))
-                            }
+                            onChange={(e) => updateField("email", e.target.value)}
                             className={inputBase}
                           />
                         </div>
@@ -380,13 +377,10 @@ export default function ContactPage({
                             id="contact-message"
                             placeholder="Tell us about your project, challenge, or what you'd like to accomplish..."
                             rows={4}
+                            maxLength={10000}
+                            disabled={sending}
                             value={formData.message}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                message: e.target.value,
-                              }))
-                            }
+                            onChange={(e) => updateField("message", e.target.value)}
                             className={`${inputBase} resize-none border-b`}
                           />
                         </div>
@@ -402,12 +396,35 @@ export default function ContactPage({
                               "Sending..."
                             ) : (
                               <>
-                                Send Message
+                                {contactWebhookUrl ? "Send Message" : "Prepare email"}
                                 <ArrowRight className="w-3.5 h-3.5" />
                               </>
                             )}
                           </button>
                         </div>
+
+                        {sending && <p role="status" className="text-sm text-slate-300">Submitting your inquiry...</p>}
+                        {error && <p role="alert" className="text-sm text-amber-200">{error}</p>}
+                        {delivery?.mode === "email" && (
+                          <div className="space-y-3 rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-5">
+                            <div role="status">
+                              <h3 className="text-base font-semibold text-white">Finish sending in your email app</h3>
+                              <p className="mt-2 text-sm text-slate-300">Nothing has been sent to TechPartner yet. Open the draft, review it, and press Send in your email app. Keep this page open until you finish.</p>
+                            </div>
+                            <div className="flex flex-wrap gap-4 text-sm">
+                              <a href={delivery.mailto} className="font-medium text-emerald-300 underline">Open email draft</a>
+                              <button type="button" onClick={copyDraft} className="text-white/90 underline">Copy email details</button>
+                            </div>
+                            <p className="break-words text-sm text-slate-300">Send to <a className="text-emerald-300 underline" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+                            <p className="break-words text-xs text-slate-400">Subject: {delivery.subject}</p>
+                            <label className="block text-xs text-slate-400" htmlFor="contact-email-copy">Your message (available for manual copy)</label>
+                            <Textarea id="contact-email-copy" readOnly value={delivery.body} rows={7} className="w-full bg-[#050a12] text-sm text-slate-200" />
+                            {copyStatus === "copied" && <p role="status" className="text-sm text-emerald-300">Copied. Paste it into an email and send it to Alex.</p>}
+                            {copyStatus === "manual" && <p role="status" className="text-sm text-amber-200">Automatic copy is unavailable. Select the message above and copy it manually.</p>}
+                          </div>
+                        )}
+
+                        {!contactWebhookUrl && <p className="text-xs text-slate-400">This form prepares an email draft. TechPartner receives it only after you send it from your email app.</p>}
 
                         <p className="text-xs text-slate-600">
                           Free consultation. No commitment. Cancel anytime.

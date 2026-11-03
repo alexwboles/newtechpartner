@@ -47,6 +47,9 @@ local-*
 dev.log
 dev.out.log
 test
+!test/
+test/*
+!test/contact-delivery.cjs
 prompt
 
 server.log
@@ -60,3 +63,6 @@ upload/pasted_image_*.png
 src/app/*.bak
 .zscripts/*.pid
 db/*.db
+/output/
+/dist/
+!.env.example
