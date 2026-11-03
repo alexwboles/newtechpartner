@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, lazy, Suspense } from "react";
+import { Component, useState, useEffect, useCallback, lazy, Suspense, type ReactNode } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import {
   Menu,
@@ -300,6 +300,28 @@ function Footer({ navigate }: { navigate: (page: string) => void }) {
   );
 }
 
+/* Keep stale asset or rendering failures from leaving an empty page. */
+class PageErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    if (this.state.failed) {
+      return (
+        <section role="alert" className="mx-auto max-w-xl px-6 pt-36 pb-24 text-center">
+          <h1 className="text-2xl font-semibold text-white">This page couldn’t finish loading.</h1>
+          <p className="mt-4 text-sm leading-7 text-slate-300">A site update or connection problem may have interrupted it. Reload to try again with the latest files. Your current page address will be kept.</p>
+          <button type="button" onClick={() => window.location.reload()} className="mt-6 rounded-lg bg-[#dfbd77] px-5 py-3 text-sm font-semibold text-[#121923] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#dfbd77]">Reload this page</button>
+        </section>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 /* ─── PAGE RENDERER ─── */
 function PageRenderer({ page, navigate }: { page: string; navigate: (page: string) => void }) {
   const pages: Record<string, React.ReactNode> = {
@@ -365,7 +387,9 @@ export default function TechPartnerApp() {
           exit="exit"
           className="flex-1"
         >
-          <PageRenderer page={currentPage} navigate={navigate} />
+          <PageErrorBoundary key={currentPage}>
+            <PageRenderer page={currentPage} navigate={navigate} />
+          </PageErrorBoundary>
         </motion.div>
       </AnimatePresence>
 

@@ -83,3 +83,44 @@ route; the development service remains running and returns HTTP 200. Earlier
 actual Edge checks and screenshots remain the evidence; later blank/transition
 images were rejected. Hosted preview/render verification and publication remain
 outstanding. Do not call the live-site task finished.
+
+## Resumed review — November 3
+
+The CLI session remained valid and both saved source revisions were intact.
+The sandbox preview hostname still timed out, but the branch's documented
+static_preview_url returned HTTP 200 and rendered the actual redesigned gallery
+in Edge. Use that static URL for review; it is not the live website.
+
+The release view now retains only the six checkout CTAs already present on the
+live site. Two prior unpublished Pro checkout offers and an unbuilt roadmap are
+not surfaced in this release. Their original data/components remain intact for
+future verified work; no prices or stored checkout mappings were changed.
+
+Testing caught a stale-chunk failure when navigating an already-open preview
+during a rebuild. Added a page error boundary with a user-triggered reload
+option, preserving the current route and keeping navigation available. A scoped
+local CDP network block reproduced the failed ContactPage import and showed the
+recovery message instead of a blank screen. The test-only block was cleared.
+
+## Exact artifact preview and final checks
+
+The latest review build was exported without rebuilding it locally. All 44 files
+were checked by SHA-256 against the remote dist output. Its source revision is
+211c55ac2794887656120058439e71c7e0cf0ff2; source files did not differ from the
+last checkpoint a479429386f25f7af25fe4f96afaa73ba70a04f4.
+
+Staged with Base44 CLI 0.3.1 using site deploy --git-hash and WITHOUT --publish.
+The response explicitly reports published:false. The legacy archive mode was
+not used because it publishes immediately. Deployment ID:
+69b18c0689f10d6d94be1d1a-git-211c55ac2794.
+
+After artifact staging, the static branch preview renders the final contact and
+portfolio pages. Hosted checks verified the ten-project gallery, search/empty
+reset, categories, project details, focus return, six existing checkout links
+with secure new-tab attributes, service-specific draft pricing and recipient,
+and contact draft persistence/copy. No real inquiry or payment was submitted.
+The 390px hosted page has no horizontal overflow; details have 16px margins and
+no internal horizontal overflow. Reload recovery was separately exercised with
+an intentional local module-request failure; it restored the same contact route.
+
+Production still serves its prior build. Publication requires Alex's approval.
