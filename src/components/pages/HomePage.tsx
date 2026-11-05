@@ -292,7 +292,38 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* ──────────────── 5. FINAL CTA ──────────────── */}
+      {/* ──────────────── 5. PRODUCTS & TOOLS ──────────────── */}
+      <section className="py-20 border-t border-white/[0.04]">
+        <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
+          <AnimatedSection>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 font-medium mb-2">
+                  Products &amp; Tools
+                </p>
+                <h3 className="text-2xl font-bold text-white">
+                  Practical AI tools, audits, and pilots
+                </h3>
+                <p className="text-sm text-slate-400 mt-2 max-w-xl leading-relaxed">
+                  Start with a focused tool or a small paid pilot — each one
+                  targets a measurable operational problem, with live
+                  calculators you can try for free.
+                </p>
+              </div>
+              <Button
+                onClick={() => navigate("products")}
+                variant="outline"
+                className="border-white/20 text-white px-6 py-3 rounded-sm hover:bg-white/5 transition-colors h-auto text-sm bg-transparent cursor-pointer shrink-0"
+              >
+                Explore Products &amp; Tools
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ──────────────── 6. FINAL CTA ──────────────── */}
       <section className="py-32 relative overflow-hidden">
         {/* Background image at 12% opacity */}
         <img
