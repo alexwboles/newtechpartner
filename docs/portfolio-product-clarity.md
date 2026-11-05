@@ -84,3 +84,31 @@ Accepted final proof: portfolio-explainer-desktop-tour-final-20261103.jpg and
 portfolio-explainer-mobile-20261103.jpg. An earlier file named desktop-tour
 actually showed the gallery and is not walkthrough proof. Source is prepared
 for GitHub; Base44 source synchronization and publication are still pending.
+
+## November 5 source completeness check
+
+The existing CLI authenticated as the owning account. Its documented read-only
+source export returned a complete current-main archive without invoking the
+sandbox command bridge. The private local archive contains 150 entries and no
+.env files. Archive SHA256:
+ca0e28c082f0a661ce55448243657277342f8017ab701e90cd42e613c3d2cb4e.
+The review branch remains active, but its own export returned 409 source_not_ready.
+No export retry, checkpoint, remote edit, merge or publish was performed.
+
+Comparison exposed an omission in this local review copy: HomePage.tsx had
+dropped main's existing Products & Tools section and navigation CTA. Restored
+that file byte-for-byte from current main. SHA256:
+de90eb348fe09d20bbe0a8686e06a22aba02030172eb5ae53c68b044b86bf9c2.
+This preserves the current homepage while the requested contact/portfolio
+changes remain isolated. It does not establish that production had this omission.
+
+TypeScript, scoped HomePage ESLint and the production build passed after the
+restoration. Visual acceptance is still open because browser control timed out.
+The exported main also contains two authentication-related source files absent
+from this local checkout. They were inspected as source and left unmodified;
+the whole local dist still must not replace the complete Base44 app.
+
+The newer direct frontend save API has a branch-scoped text batch route, but it
+does not establish a no-credit way to persist the six binary preview assets or
+build and verify the current branch. The existing credit/release question remains
+pending. Only its contracts and read-only exports were used in this check.
